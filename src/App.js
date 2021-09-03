@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React projet 7
+          Learn React projet 7 - branche de production
         </a>
       </header>
     </div>
