@@ -15,8 +15,9 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React projet 7 - branche de production
+          Learn React projet 7 - pourquoi tu ne vois pas les  ?
         </a>
+        <Sinscrire/>
       </header>
     </div>
   );
