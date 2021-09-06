@@ -1,0 +1,99 @@
+.Sinscire {
+  background-color: #dfe6ed;
+  height: 1300px;
+}
+
+.App-header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  &__Logo {
+    height: 3rem;
+  }
+  button {
+    color: #d3455b;
+    background-color: white;
+    border: none;
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+.Identification {
+  background-color: white;
+  margin-top: 60px;
+  padding-left: 9vw;
+  padding-right: 9vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  height: 650px;
+}
+.h1Test {
+  color: #d3455b;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-size: 1.8rem;
+  &__h2 {
+    padding-left: 4vw;
+    color: #d3455b;
+    text-align: center;
+  }
+}
+
+.Input {
+  margin-bottom: 50px;
+  label {
+    display: flex;
+    flex-direction: column;
+    input {
+      border: none;
+      border-bottom: 1px solid;
+      padding-top: 10px;
+    }
+  }
+}
+.Bouton-link {
+  color: white;
+  background-color: #d3455b;
+  width: 70vw;
+  border: none;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  margin-top: 45px;
+  margin-bottom: 20px;
+}
+
+.Menu {
+  position: absolute;
+  top: 50px;
+  background-color: #f7f9fa;
+  width: 100vw;
+  left: 0px;
+  height: 176px;
+  nav > ul > li {
+    list-style: none;
+    border: none;
+    border-top: 1px solid #CBD4DA;
+    border-bottom: 1px solid #CBD4DA;
+    height: 50px;
+    margin-left: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      text-decoration: none;
+      color: #293845;
+    }
+  }
+}
+
+.Information {
+  font-size: 0.7rem;
+  text-align: center;
+}
