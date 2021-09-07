@@ -1,5 +1,6 @@
 import React from 'react';
-import '../../App.scss';
+import '../Menu/Menu.scss';
+import '../../Reusable/Titres.scss';
 
 const Menu = (props) => {
     return (

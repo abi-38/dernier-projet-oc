@@ -1,7 +1,8 @@
 import React from 'react';
 import Input from '../../Reusable/Input';
 import Button from '../../Reusable/Button';
-import '../../App.scss';
+import '../Identification/Identification.scss';
+/* Faire une liste ? */
 
 function Identification() {
     return (

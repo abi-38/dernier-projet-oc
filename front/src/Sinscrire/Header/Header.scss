@@ -1,0 +1,13 @@
+.App-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 15px;
+    padding-bottom: 15px; 
+    &__Logo {
+      height: 3rem;
+    }
+}

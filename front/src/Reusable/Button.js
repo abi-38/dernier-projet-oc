@@ -1,4 +1,5 @@
 import React from 'react';
+import './Button.scss';
 
 /*Reprendre notation type*/
 const Button = (props) => {
