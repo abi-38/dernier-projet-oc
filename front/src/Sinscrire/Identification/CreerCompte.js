@@ -4,18 +4,18 @@ import '../Identification/Identification.scss';
 import '../../Listes/sinscrireList';
 import '../../Listes/seConnecterList';
 import Input from '../../Reusable/Input';
-import seConnecterList from '../../Listes/seConnecterList';
+import sinscrireList from '../../Listes/sinscrireList';
 import '../../Reusable/Input.scss';
 
-function Identification(props) {
+function CreerCommpte (props) {
   const List = (props);
     return (
       <>
         <div className="Identification">
-          <h1 className='h1Test' >Identifiez-vous</h1>
+          <h1 className='h1Test' >Créer un compte</h1>
           
           <form>
-            {seConnecterList.map(champ => {
+            {sinscrireList.map(champ => {
                 return <li key={champ.id} className="Input">
                 <Input champ={champ} />
                 </li>
@@ -33,4 +33,4 @@ function Identification(props) {
 {List && <FormSinscrire/> }
 {List.map(champ => { */
 
-export default Identification;
+export default CreerCommpte;

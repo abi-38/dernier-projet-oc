@@ -1,14 +1,12 @@
 import React from 'react';
-import './Input.scss';
 
 const Input = (props) => {
+  const {champ} = props;
     return (
-      <div className="Input">
-        <label>
-            {props.label}
-            <input type="text" name="label" />
-        </label>
-      </div>
+      <label>
+          {champ.label}
+          <input type={champ.type} name={champ.name} />
+      </label>
     );
 }
 

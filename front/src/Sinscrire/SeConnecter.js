@@ -1,17 +1,17 @@
 import React from 'react';
-import CreerCompte from './Identification/CreerCompte';
+import Identification from './Identification/Identification';
 import '../scss/_variables.scss';
 import '../App.scss';
 import '../Sinscrire/Sinscrire.scss';
 import Header  from './Header/Header';
 
-function Sinscrire() {
+function SeConnecter() {
   return (
     <div className="Sinscire">
       <Header/>
-      <CreerCompte/>
+      <Identification/>
     </div>
   );
 }
   
-export default Sinscrire;
+export default SeConnecter;
