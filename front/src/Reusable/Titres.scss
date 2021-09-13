@@ -1,0 +1,13 @@
+.h1Test {
+    color: #d3455b;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    font-size: 1.8rem;
+    &__h2 {
+      padding-left: 4vw;
+      color: #d3455b;
+      text-align: center;
+    }
+}

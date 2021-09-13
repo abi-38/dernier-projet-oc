@@ -1,0 +1,14 @@
+a.dropdown-toggle {
+    color: #d3455b;
+    font-size: 30px;
+    margin-right: 10px;
+    &:hover {
+        color: #d3455b;
+    }
+    &::after {
+        display: none;
+    }
+}
+li > a.dropdown-item > a {
+    color: #d3455b !important;
+}

@@ -1,0 +1,18 @@
+.Input {
+    margin-bottom: 40px;
+    list-style: none;
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.1rem;
+      input {
+        border: none;
+        border-bottom: 1px solid;
+        padding-top: 10px;
+        &:focus {
+          background-color: #d3455a3d;
+          border: 2px solid #d3455b;
+        }
+      }
+    }
+}
