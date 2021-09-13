@@ -24,13 +24,9 @@ function Identification(props) {
           </form>
           <Button text={'Se connecter'} />
         </div>
-        <p className='Information'>Vous avez déjà un compte ? <a href='#'>Identifiez-vous !</a></p>
+        <p className='Information'>Vous n'avez pas de compte ? <a href='#'>Inscrivez-vous !</a></p>
       </>
     );
 }
-
-/* 
-{List && <FormSinscrire/> }
-{List.map(champ => { */
 
 export default Identification;

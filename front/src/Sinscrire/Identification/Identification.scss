@@ -5,7 +5,11 @@
     padding-right: 9vw;
     margin-left: 5vw;
     margin-right: 5vw;
-    height: 590px;
+    height: 410px;
+    margin-bottom: 5px;
+    &__Compte {
+        height: 630px !important;
+    }
 }
 .Information {
     font-size: 0.7rem;

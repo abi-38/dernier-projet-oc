@@ -1,13 +1,11 @@
 import './App.scss';
-import Sinscrire from './Sinscrire/Sinscrire';
-import SeConnecter from './Sinscrire/SeConnecter';
+import React from 'react';
+import './Reusable/Titres.scss';
+import Header from './Header/Header';
 
 function App() {
   return (
-    <>
-    <Sinscrire/>
-    <SeConnecter/>
-    </>
+    <Header/>
   );
 }
 

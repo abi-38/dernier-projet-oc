@@ -11,7 +11,7 @@ function CreerCommpte (props) {
   const List = (props);
     return (
       <>
-        <div className="Identification">
+        <div className="Identification Identification__Compte">
           <h1 className='h1Test' >Créer un compte</h1>
           
           <form>
@@ -28,9 +28,5 @@ function CreerCommpte (props) {
       </>
     );
 }
-
-/* 
-{List && <FormSinscrire/> }
-{List.map(champ => { */
 
 export default CreerCommpte;
