@@ -22,7 +22,7 @@ if (!localStorage.getItem( {key: 'token'} )) { // ET Vérifier que le token est 
 }
 return (
     <DropDownListConnected/>
-)
+)èç
 */
 
 export default Header;

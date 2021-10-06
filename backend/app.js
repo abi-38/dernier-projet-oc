@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json());//express.json plus de bodyparser
 app.use('/api/post', postRoutes);
 
 
