@@ -1,0 +1,22 @@
+.App-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    &__Logo {
+      height: 3rem;
+      padding: 5px;
+    }
+}
+.h1 {
+  color: #d3455b;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-size: 1.8rem;
+  &__h2 {
+    font-size: 1rem;
+    padding-left: 2vw;
+    text-align: center;
+  }
+}

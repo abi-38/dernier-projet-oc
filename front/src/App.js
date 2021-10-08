@@ -1,7 +1,7 @@
 import './App.scss';
 import React from 'react';
-import './Reusable/Titres.scss';
-import Header from './Header/Header';
+// renommer le scss en Header.scss ? vérifier où est-il utiliser ?
+import Header from './components/Layout/Header/Header';
 
 function App() {
   return (

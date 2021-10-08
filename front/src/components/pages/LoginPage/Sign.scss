@@ -1,0 +1,59 @@
+.Sinscire {
+    background-color: #dfe6ed;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+    width: 100vw;
+    height: 750px;
+    overflow-y: hidden !important;
+}
+.Identification {
+    background-color: white;
+    margin-top: 60px;
+    padding-left: 9vw;
+    padding-right: 9vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 5px;
+    height: 410px;
+    &__Compte {
+        height: 630px !important;
+    }
+}
+.Information {
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .Sinscire {
+        left: 95.33/*-732.15px*/;
+        top: 50px;
+        width: 100vw;
+        height: 1024px !important;
+    }
+    .Identification {
+        margin-left: 22vw;
+        margin-right: 22vw;
+        height: 424px;
+        margin-top: 80px;
+    }
+    .Bouton-link {
+        width: 38vw;
+    }
+}
+
+@media (min-width: 1000px) {
+    .Sinscire {
+        left: -97.5VW/*-1404px*/;
+    }
+    .Identification {
+        margin-left: 35vw;
+        margin-right: 35vw;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+    .Bouton-link {
+        width: 20vw;
+    }
+}
