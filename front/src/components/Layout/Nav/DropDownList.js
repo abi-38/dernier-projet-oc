@@ -1,33 +1,16 @@
 import React from 'react';
 import { MDBDropdown } from 'mdb-react-ui-kit';
-import MenuConnected from './assets/Listes/MenuConnected';
-import './components/Layout/Nav/DropDownList.scss';
+import MenuLogin from '../../../assets/Listes/MenuLogin';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
-import NavConnected from './navConnected';
+import Nav from './nav';
 import { GuardProvider, GuardedRoute } from 'react-router-guards';
 
 //import { getIsLoggedIn } from 'utils'; -> composant à créer ?
 
-
-export default function DropDownListConnected () {
-  return (
-    <Router>
-        <MDBDropdown>
-            <NavConnected/>
-            
-            <Switch>
-                {MenuConnected.map((route, index) => <Route key={index} path={route.path} exact={route.exact ?? false} meta={{ auth: true }}>{route.component}</Route>)}
-            </Switch>
-            
-        </MDBDropdown>
-    </Router>
-  );
-}
 
 /*const requireLogin = (to, from, next) => {
   if (to.meta.auth) {
@@ -44,3 +27,20 @@ export default function DropDownListConnected () {
 <GuardedRoute path="/" exact component={Home} meta={{ auth: true }} />
 */
 
+export default function DropDownList () {
+  return (
+    <Router>
+        <MDBDropdown>
+            <Nav/>
+            
+            <Switch>
+                {MenuLogin.map((route, index) => 
+                <Route key={index} path={route.path} exact={route.exact ?? false} meta={{ auth: true }}>
+                  {route.component}
+                </Route>)}
+            </Switch>
+            
+        </MDBDropdown>
+    </Router>
+  );
+}
