@@ -1,11 +1,12 @@
 const db = require("../models");
+const User = db.user;
 const Post = db.post;
 const Op = db.sequelize.Op; // à quoi ça sert ? est-ce bien utile ?
-const fs = require('fs');
+const fs = require('fs'); // pour les fichiers img
 
     // faut-il utiliser les returns ?? .save() est manquant ?
 exports.createPost = (req, res, next) => {
-  // nécessaire -> delete req.body._id; ?
+  // nécessaire -> delete req.body._id; Non
   if(!req.body.title) {
     res.status(400).send({
       message: "Content can't be empty !"
@@ -13,23 +14,22 @@ exports.createPost = (req, res, next) => {
     return;
   }
   Post.create({
-  title: req.body.title,
-  userId: req.body.userId,
-  description: req.body.description,
-  urlPicture: req.body.urlPicture,
-  date: req.body.date,
-  description: req.body.description,
-  //...req.body, <- on peut l'utiliser ? 
+    title: req.body.title,
+    //userId: req.body.userId,
+    description: req.body.description,
+    //urlPicture: req.body.urlPicture,
+    //...req.body, <- on peut l'utiliser ? 
 
-  /* pas sûr... */
-  profilPicture: req.body.profilPicture,
-  userName: req.body.userName,  
+    /* comment traiter ceci ? */
+    //profilPicture: req.body.profilPicture,
+    //userName: req.body.userName,  
   })
     .then((post) => {
-      res.status(201).send(post); // ou .json(post) ??
+      post.setUser(req.user);
+      return res.status(201).json(post); 
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).json({
         message: err.message || "some error occured while creating the post"
       });
     });
@@ -68,10 +68,10 @@ exports.findAllPost = (req, res, next) => {
 
     Post.findAll()
     .then((posts) => {
-      res.status(200).send(posts); // ou .json(posts) ??
+      return res.status(200).json(posts); 
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).json({
         message: err.message || "some error occured while looking for the posts"
       });
     });
@@ -80,10 +80,10 @@ exports.findAllPost = (req, res, next) => {
 exports.findOnePost = (req, res, next) => {
     Post.findByPk( req.params.id )
     .then((post) => {
-      res.status(200).send(post); // ou .json(post) ??
+      res.status(200).json(post); 
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(500).json({
         message: err.message || "some error occured while creating the post"
       });
     });

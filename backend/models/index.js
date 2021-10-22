@@ -1,11 +1,14 @@
 const dbConfig = require("../config/db.config");
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(
+  dbConfig.DB, 
+  dbConfig.USER, 
+  dbConfig.PASSWORD, 
+  {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: false,
-
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -19,8 +22,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// à vérifier
 db.user = require("./user.model")(sequelize, Sequelize);
 db.post = require("./post.model")(sequelize, Sequelize);
+
+db.user.hasMany(db.post, { as: "posts" });
+db.post.belongsTo(db.user, {
+  foreignKey: "userId" // clé étrangère dans le post
+});
 
 module.exports = db;

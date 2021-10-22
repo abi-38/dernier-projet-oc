@@ -16,7 +16,12 @@ app.use((req, res, next) => {
 
 // à vérifier
 const db = require("./models");
-db.sequelize.sync();
+//const controller = require("./controllers/post"); // ??
+
+db.sequelize.sync({ alter: process.env.APP_ENV === "dev" }).then(() => {
+    console.log("connexion à la bdd ok !");
+    //run();
+  }).catch(e => console.error(e));
 
 app.use(express.json());//express.json plus de bodyparser
 app.use('/images', express.static(path.join(__dirname, 'images')));

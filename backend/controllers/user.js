@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require("../models");
-const User = db.User;
+const User = db.user;
 const Op = db.sequelize.Op; // à quoi ça sert ? est-ce bien utile ?
 const jwt = require('jsonwebtoken'); 
 
@@ -16,19 +16,26 @@ exports.signup = (req, res, next) => {
         .then(
             hash => {
                 User.create({
-                    // comment on traite le userId ? est-ce automatique ?
+                    // comment on traite le userId -> c'est automatique
                     name: req.body.name,
-                    //photoProfil: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` -> OK?
+                    //photoProfil: req.file.filename
                     email: req.body.email,
                     password: hash,
                     description: req.body.description
                 })
-                .then(() => res.status(201).send({ message: 'Utilisateur créé !' }))
-                .catch(error => res.status(400).send({ error }));
+                .then((user) => {
+                    console.log(user)
+                    return res.status(201).json({ message: 'Utilisateur créé !' })}
+                )
+                .catch(error => res.status(400).json({ error }));
         })
-        .catch(error => res.status(500).send({ error })); //ou .json() ?
+        .catch(error => {
+            console.log(error);
+            return res.status(500).json({ error })
+        }); //ou .json() ?
+
     } else {
-        throw 'Email non valide !';
+        return res.status(400).json({ error: 'Email ou mot de passe non valide !' })
     }
 };
 
@@ -38,20 +45,27 @@ exports.login = (req, res, next) => {
     const mdpReg = new RegExp(/^[\w\-]{6,}$/);
     const validMdp = mdpReg.test(req.body.password);
     if(validEmail && validMdp) {
-        User.findByPk( req.body.email ) // ça va marcher ? ou .id ?
+        User.findOne( {
+            where: {email: req.body.email}
+        }) // 
         .then(user => {
         if (!user) {
-            return res.status(401).send({ error: 'Utilisateur non trouvé !' });
+            return res.status(401).json({ error: 'Utilisateur ou mot de passe non trouvé !' });
         }
         bcrypt.compare(req.body.password, user.password) // U majuscule ?
             .then(valid => {
             if (!valid) {
-                return res.status(401).send({ error: 'Mot de passe incorrect !' });
+                return res.status(401).json({ error: 'Utilisateur ou mot de passe non trouvé !' });
             }
-            res.status(200).send({
-                userId: user.id, // faut-il _id ou juste id ?
-                token: jwt.sign(
-                    { userId: user._id }, 
+            return res.status(200).json({
+                userId: user.id, 
+                token: jwt.sign({
+                    //exp
+                    data:{
+                        userEmail: user.email,
+                        userId: user.id
+                    }
+                },
                     process.env.TOKEN, // RANDOM_TOKEN_SECRET - pahdtcps521199cjneyslfh1545sljfsss1145
                     { expiresIn: '6 hours' } 
                 )

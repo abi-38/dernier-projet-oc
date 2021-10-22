@@ -1,28 +1,28 @@
-module.exports = (sequelize, Sequelize) => {
-    const Post = sequelize.define("post", {
+module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme instance librairie de sequelize
+    const Post = sequelize.define(
+        "post", // sequelize va générer le nom de table posts (au pluriel)
+        {
         title: {
-            type: Sequelize.STRING
-        },
-        // faut-il aussi mettre les éléments du profil photoProfile et userName
-        // ou userId suffit ? 
-        userId: {
-            type: Sequelize.STRING
-        },
-        profilPicture: {
-            type: Sequelize.STRING 
-        },
-        userName: {
-            type: Sequelize.STRING 
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: {
+                    args: true, 
+                    msg: "le titre est requis."
+                },
+                notNull: { // pour utiliser ceci impécher le null -> allowNull: false
+                    args: true, 
+                    msg: "le titre ne peut pas être vide."
+                }
+            }
         },
         urlPicture: {
+            allowNull: true,
             type: Sequelize.STRING
-        },
-        date: {
-            type: Sequelize.NUMBER // comment on note les date ?
         },
         description: {
             type: Sequelize.STRING
-        },
+        }, // utiliser les validator custom
     });
   
     return Post;

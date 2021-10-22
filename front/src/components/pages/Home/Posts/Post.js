@@ -37,13 +37,13 @@ const Post = () => {
                 </div>
                 <div>
                     {post.nom} <br/>
-                    {post.dateDePublication}
+                    {post.date}
                 </div>
                 <div className='DivPhoto'>
-                    <img src={post.imagePublication} className="ImgPost" alt='photoPost' />
+                    <img src={post.image} className="ImgPost" alt='photoPost' />
                 </div>
                 <div>
-                    {post.descriptionPublication}
+                    {post.description}
                 </div>
                 <Button type='button' text="J'aime" />
                 <Button type='button' className='Bouton-link__GreyButton' text="Je n'aime pas" />
