@@ -27,7 +27,8 @@ db.post = require("./post.model")(sequelize, Sequelize);
 
 db.user.hasMany(db.post, { as: "posts" });
 db.post.belongsTo(db.user, {
-  foreignKey: "userId" // clé étrangère dans le post
+  foreignKey: "userId" // clé étrangère dans le modèle post -> la nommée dans ce sens
+  // si cette ligne n'est pas là par défaut il la créera !
 });
 
 module.exports = db;

@@ -11,11 +11,8 @@ module.exports = async (req, res, next) => {
         // on se débarrasse du BEARED
         const decodedToken = jwt.verify(token, process.env.TOKEN); // on vérifie que le token correspond à ce qui était rentré
         const userId = decodedToken.userId; // on récupère l'idToken il est comme un objet js
-        /*if(req.body.userId && req.body.userId !== userId){ // ne sert à rien
-            throw 'User Id non valable !';
-        } else {
-            next(); // si tout est bon on peut passer à la suite
-        }*/
+        
+        // faire la même chose pour la photo de profil du user
         const user = await User.findByPk(userId)
         req.user = user
         next();
