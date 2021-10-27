@@ -1,4 +1,4 @@
-module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme instance librairie de sequelize
+module.exports = (sequelize, Sequelize) => { 
     const Post = sequelize.define(
         "post", // sequelize va générer le nom de table posts (au pluriel)
         {
@@ -10,19 +10,20 @@ module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme ins
                     args: true, 
                     msg: "le titre est requis."
                 },
-                notNull: { // pour utiliser ceci impécher le null -> allowNull: false
+                notNull: { 
                     args: true, 
                     msg: "le titre ne peut pas être vide."
                 }
             }
         },
-        urlPicture: {
+        imageUrl: {
             allowNull: true,
             type: Sequelize.STRING
         },
         description: {
             type: Sequelize.STRING
-        }, // utiliser les validator custom
+        }, // utiliser les validators custom 
+        //-> l'utlisateur doit remplir soit un titre soit une description
     });
   
     return Post;

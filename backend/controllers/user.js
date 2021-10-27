@@ -16,7 +16,6 @@ exports.signup = (req, res, next) => {
         .then(
             hash => {
                 User.create({
-                    // comment on traite le userId -> c'est automatique
                     name: req.body.name,
                     //photoProfil: req.file.filename
                     email: req.body.email,
@@ -32,7 +31,7 @@ exports.signup = (req, res, next) => {
         .catch(error => {
             console.log(error);
             return res.status(500).json({ error })
-        }); //ou .json() ?
+        }); 
 
     } else {
         return res.status(400).json({ error: 'Email ou mot de passe non valide !' })
@@ -59,8 +58,9 @@ exports.login = (req, res, next) => {
             }
             return res.status(200).json({
                 userId: user.id, 
+                // vérifier l'emplacement de cette ligne...
+                exp: Math.floor( Date.now() / 1000 ) + (60*60),
                 token: jwt.sign({
-                    //exp
                     data:{
                         userEmail: user.email,
                         userId: user.id
@@ -71,9 +71,9 @@ exports.login = (req, res, next) => {
                 )
             });
             })
-            .catch(error => res.status(500).send({ error }));
+            .catch(error => res.status(500).json({ error }));
         })
-        .catch(error => res.status(500).send({ error })); // ou .json ?
+        .catch(error => res.status(500).json({ error }));
     } else {
         throw 'Email ou mot de passe non valide !';
     }

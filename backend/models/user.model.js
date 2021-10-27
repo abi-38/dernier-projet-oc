@@ -1,12 +1,11 @@
-
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme instance librairie de sequelize
     const User = sequelize.define(
         "user", // sequelize va générer le nom de table users (au pluriel)
         {
         //id est automatiquement généré
         // de même pour createAt et updateAt
         name: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: false,
             validate: {
                 notEmpty: {
@@ -20,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         /*photoProfil: {
-            type: DataTypes.STRING, 
+            type: Sequelize.STRING, 
             allowNull: false
         },*/
         email: {
-            type: DataTypes.STRING, 
+            type: Sequelize.STRING, 
             allowNull: false,
             unique: { 
                 args: true, 
@@ -42,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         password: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: false,
             validate: {
                 notEmpty: {
@@ -56,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         description: {
-            type: DataTypes.STRING 
+            type: Sequelize.STRING 
         }
     });
   
