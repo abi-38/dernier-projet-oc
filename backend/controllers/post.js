@@ -40,9 +40,10 @@ exports.createPost = (req, res, next) => {
     });
     return;
   }
-  const postObject = JSON.parse(req.body.post);
+  // if pas de fichier faire 1ère route sinon faire a 2nd
+  console.log(req.body);
   Post.create({
-  ...postObject, 
+  ...req.body, 
   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  
   })
   .then((post) => {

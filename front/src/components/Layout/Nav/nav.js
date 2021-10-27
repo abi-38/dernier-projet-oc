@@ -6,7 +6,8 @@ import {
     Link
 } from "react-router-dom";
 // isConnected est à améliorer !!
-const isConnected = localStorage.getItem( {key: 'token'} );// ET Vérifier que le token est valide
+const isConnected = localStorage.getItem( 'token' );// ET Vérifier que le token est valide
+// utiliser le useState:token et useEffect:changement dans localStorage -> hook
 
 export default function Nav () {    
     return (

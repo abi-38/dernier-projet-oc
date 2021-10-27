@@ -31,15 +31,14 @@ export default function DropDownList () {
   return (
     <Router>
         <MDBDropdown>
-            <Nav/>
-            
-            <Switch>
-                {MenuLogin.map((route, index) => 
-                <Route key={index} path={route.path} exact={route.exact ?? false} meta={{ auth: true }}>
-                  {route.component}
-                </Route>)}
-            </Switch>
-            
+          <Nav/>
+          
+          <Switch>
+              {MenuLogin.map((route, index) => 
+              <Route key={index} path={route.path} exact={route.exact ?? false} meta={{ auth: true }}>
+                {route.component}
+              </Route>)}
+          </Switch>
         </MDBDropdown>
     </Router>
   );
