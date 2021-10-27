@@ -6,7 +6,7 @@ import Home from '../../components/pages/Home/Home'
 const MenuLogin = [
     {path : '/sinscrire', component: <SignUp/>, exact: true },
     {path : '/', component: <SignIn/>, exact: true },
-    {path : '/', component: <Home/>, exact: true },
+    {path : '/home', component: <Home/>, exact: true },
     {path : '*', component: <NotFound/> }
 ];
 

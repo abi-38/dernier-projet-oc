@@ -19,7 +19,8 @@ const Post = () => {
             if (response.status === 200) { //Base sur le code de status du retour de l'api
                 setPosts(data);
             } else {
-                setError('Une erreur a été rencontré lors de la récupération des posts') //Ou message d'erreur provenant de l'api
+                setError('Une erreur a été rencontré lors de la récupération des posts'); //Ou message d'erreur provenant de l'api
+                console.log(error)
             }
             
         }
@@ -33,16 +34,17 @@ const Post = () => {
         return <li key={post.id} className="Post">
             <div className='Identification'>
                 <div className='DivProfil'>
-                    <img src={post.photoProfil} className='PhotoProfil' alt='photoProfil' />
+                    
                 </div>
                 <div>
-                    {post.nom} <br/>
-                    {post.date}
+                    
+                    {post.createdAt}
                 </div>
                 <div className='DivPhoto'>
-                    <img src={post.image} className="ImgPost" alt='photoPost' />
+                    
                 </div>
                 <div>
+                    {post.title}
                     {post.description}
                 </div>
                 <Button type='button' text="J'aime" />
@@ -60,5 +62,7 @@ const Post = () => {
         </ul>
     )
 }
+//<img src={post.photoProfil} className='PhotoProfil' alt='photoProfil' />
+//<img src={post.image} className="ImgPost" alt='photoPost' />
 
 export default Post;
