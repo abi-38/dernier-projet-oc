@@ -18,10 +18,10 @@ module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme ins
                 }
             }
         },
-        /*photoProfil: {
-            type: Sequelize.STRING, 
-            allowNull: false
-        },*/
+        imageUrl: {
+            allowNull: true,
+            type: Sequelize.STRING            
+        },
         email: {
             type: Sequelize.STRING, 
             allowNull: false,
@@ -55,7 +55,8 @@ module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme ins
             }
         },
         description: {
-            type: Sequelize.STRING 
+            type: Sequelize.STRING,
+            allowNull: true
         }
     });
   
