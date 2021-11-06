@@ -1,0 +1,32 @@
+@import "../../../scss/variables";
+
+.Bouton-link {
+    color: white;
+    background-color: $color-primary;
+    width: 70vw;
+    border: none;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    &__SmallMarge {
+        margin-bottom: 5px;
+    }
+    &__GreyButton {
+        background-color: grey !important;
+    }
+}
+
+@media (min-width: 760px) {
+    .Bouton-link {
+        width: 40vw;
+    }
+}
+
+@media (min-width: 998px) {
+    .Bouton-link {
+        width: 20vw;
+    }
+}
+

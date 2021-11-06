@@ -1,0 +1,30 @@
+@import "../../../scss/variables";
+
+.Input {
+  margin-bottom: 40px;
+  label {
+    font-size: 1.1rem;
+  }
+  input, textarea {
+    width: 70vw;
+    margin-top: 5px;
+    &:focus {
+      background: $color-focus;
+      border: 3px solid $color-primary;
+      border-radius: 3px;
+      color: $color-primary;
+    }
+  }
+}
+
+@media (min-width: 760px) {
+  .Input > input, .Input > textarea {
+    width: 40vw;
+  }
+}
+
+@media (min-width: 998px) {
+  .Input > input, .Input > textarea {
+    width: 20vw;
+  }
+}

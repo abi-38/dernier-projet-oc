@@ -23,13 +23,17 @@ exports.signup = (req, res, next) => {
             hash => {
                 const userObject = req.file ?
                     {
-                        ...req.body,
+                        name: req.body.name,
+                        email: req.body.email,
                         password: hash,
                         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                        description: req.body.description
                     } : 
                     { 
-                        ...req.body,
-                        password: hash
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: hash,
+                        description: req.body.description
                     };
                 User.create(userObject)
                 .then((user) => {
@@ -59,12 +63,12 @@ exports.login = (req, res, next) => {
         }) 
         .then(user => {
         if (!user) {
-            return res.status(401).json({ error: 'Utilisateur ou mot de passe non trouvé !' });
+            return res.status(401).json({ error: 'Utilisateur non trouvé !' });
         }
         bcrypt.compare(req.body.password, user.password) 
             .then(valid => {
             if (!valid) {
-                return res.status(401).json({ error: 'Utilisateur ou mot de passe non trouvé !' });
+                return res.status(401).json({ error: 'Mot de passe non trouvé !' });
             }
             return res.status(200).json({
                 userId: user.id, 

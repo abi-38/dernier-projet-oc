@@ -16,3 +16,4 @@ const Home = () => {
 }
 
 export default Home;
+//<Post/> -> remettre ce composant que les autres pbs seront réglé
