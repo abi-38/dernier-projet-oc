@@ -2,14 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import {useState} from 'react';
 import {useReducer} from 'react';
 //import {useEffect} from 'react';
-import Input from '../../../UI/Input';
-import '../../../UI/Input.scss';
-import SignInList from '../../../../assets/Listes/SignInList';
+import '../../../UI/input/Input.scss';
+//import SignInList from '../../../../assets/Listes/SignInList';
 import '../Sign.scss';
-import Button from '../../../UI/Button';
-import '../../../UI/Button.scss';
+import Button from '../../../UI/button/Button';
+import '../../../UI/button/Button.scss';
 import {POST} from '../../../../assets/api/confAxios';
 import { useHistory } from "react-router-dom";
+//import '../../Layout/Header/Header.scss';
+import {
+    Link
+  } from "react-router-dom";
+import Card from '../../../UI/card/Card';
 
 //Reprendre notation type
 const Login = () => { 
@@ -19,14 +23,15 @@ const Login = () => {
 
     const [formIsValid, setFormIsValid] = useState ( false );
 
-    const [emailState, dispatchEmail] = useReducer ( {value: "", isValid: null} );
-    const [passwordState, dispatchPassword] = useReducer ( {value: "", isValid: null} );
+    //const [emailState, dispatchEmail] = useReducer ( {value: "", isValid: null} );
+    //const [passwordState, dispatchPassword] = useReducer ( {value: "", isValid: null} );
 
     const [emailValue, setEmailValue] = useState ( "" );
     const [emailIsValid, setEmailIsValid] = useState ( null );
     const [passwordValue, setPasswordValue] = useState ( "" );
     const [passwordIsValid, setPasswordIsValid] = useState ( null );
     const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     //const authCtx = useContext(AuthContext); //AuthContext à définir
 
@@ -73,54 +78,67 @@ const Login = () => {
         setPasswordIsValid(passwordValue.length > 6);
         setFormIsValid(passwordValue.length > 6 && emailValue.includes('@'));
     }
-
-    const submitHandler = async (event) => {
-        event.preventDefault();
-        //if (formIsValid) {
-            //authCtx.onLogin(emailState.value, passwordState.value);
-            const response = await POST( '/api/auth/login', {
-                email: emailValue,
-                password: passwordValue
-            } )
-            if(response.status === 200 ) {
-                const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
-                console.log(data);
-                localStorage.setItem('token', data.token); // accolade = return juste pour les promesses .then
-
-                history.push("/home");
-
-
-                
-            } else {
-                setError('Une erreur a été rencontré lors de la connexion au compte') //mettre message api
-                console.log(error);
-            }
-        //}   
-    }
+    //useEffect(() => {    
+        const submitHandler = async (event) => {
+            event.preventDefault();
+            //if (formIsValid) {
+                //authCtx.onLogin(emailState.value, passwordState.value);
+                const response = await POST( '/api/auth/login', {
+                    email: emailValue,
+                    password: passwordValue
+                } )
+                if(response.status === 200 ) {
+                    const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
+                    console.log('Utilisateur bien connécté !')
+                    //comment envoyé un success message à l'utilisateur ?
+                    localStorage.setItem('token', data.token); // accolade = return juste pour les promesses .then
+                    history.push("/home");
+                } else {
+                    setError('Une erreur a été rencontré lors de la connexion au compte') //mettre message api
+                    console.log(error);
+                }
+            //}   
+        }
+        //setIsLoaded(true)
+        //submitHandler();
+        //setIsLoaded(false);
+    //}, [])
 
     return (
-      <form onSubmit={submitHandler}>
-        <input
-            idt="email"
-            //isValid={emailIsValid}
-            type="email"
-            value={emailValue}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler}
-            className="Input"
-        />
-        <input
-            id="password"
-            //isValid={passwordIsValid}
-            type="password"
-            value={passwordValue}
-            onChange={passwordChangeHandler}
-            onBlur={validatePasswordHandler}
-            //ref={passwordInputRef} -> pas besoin à utiliser pour composant générique - cas spécifique
-            className="Input"
-        />
-        <Button type="submit" className='Bouton-link__Connection' /*disabled={!formIsValid}*/ text='Se connecter' />
-      </form>
+        <div className="Sinscire">
+            <Card>
+                <h1 className='h1'>Identifiez-vous</h1>
+                <form onSubmit={submitHandler}>
+                    <div className="Input">
+                        <label for="email">E-mail :</label>
+                        <input
+                            id="email"
+                            label="Email"
+                            //isValid={emailIsValid}
+                            type="email"
+                            value={emailValue}
+                            onChange={emailChangeHandler}
+                            onBlur={validateEmailHandler}
+                        />
+                    </div>
+                    <div className="Input">
+                        <label for="password">Mot de passe :</label>
+                        <input
+                            id="password"
+                            label="Mot de passe"
+                            //isValid={passwordIsValid}
+                            type="password"
+                            value={passwordValue}
+                            onChange={passwordChangeHandler}
+                            onBlur={validatePasswordHandler}
+                            //ref={passwordInputRef} -> pas besoin à utiliser pour composant générique - cas spécifique
+                        />
+                    </div>
+                    <Button type="submit" /*disabled={!formIsValid}*/ text='Se connecter' />
+                </form>
+            </Card>
+        <p className='Information'>Vous n'avez pas de compte ? <Link to="/sinscrire">Inscrivez-vous !</Link></p>
+    </div>
     );
 }
 

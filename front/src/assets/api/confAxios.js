@@ -10,7 +10,7 @@ axios.defaults.timeout = 60000;
 
 
 axios.interceptors.request.use(function (config) {
-    const token = localStorage.getItem({key: 'token'});
+    const token = localStorage.getItem('token');
     if (config.url && !ANONYMOUS_ROUTE.includes(config.url)) {
         config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -20,8 +20,8 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (response) {
     if (response.status === 401) {
-        if (localStorage.hasOwnProperty( {v:'token'} )) {
-            localStorage.removeItem( {key: 'token'} );
+        if (localStorage.hasOwnProperty('token')) {
+            localStorage.removeItem('token');
         }
     }
     return response;

@@ -62,3 +62,5 @@ module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme ins
   
     return User;
 };
+
+//fonction de rôle ou d'administration

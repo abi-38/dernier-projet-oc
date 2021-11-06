@@ -1,11 +1,11 @@
 import React from 'react';
 import {useState} from 'react';
 import {useEffect} from 'react';
-//import PostList from '../../../../assets/Listes/PostList';
-import Button from '../../../UI/Button';
-//import PostStyle from '../Reusable/PostStyle.scss';
+import Button from '../../../UI/button/Button';
+import '../../../UI/button/Button.scss';
 import {GET} from '../../../../assets/api/confAxios';
 //const GET = require('../api/confAxios'); -> interdit + ne pas mettre le require avant import
+import Card from "../../../UI/card/Card";
 
 const Post = () => {
     const [error, setError] = useState(null);
@@ -14,13 +14,14 @@ const Post = () => {
     
     useEffect(() => {
         const loadPosts = async () => {
-            const response =  await GET('http://localhost:3000/api/post');
+            const response =  await GET('/api/post');
             const data = response.data;
             if (response.status === 200) { //Base sur le code de status du retour de l'api
                 setPosts(data);
+                console.log('Le post a bien été créé !')
+                //comment envoyé un success message à l'utilisateur ?
             } else {
                 setError('Une erreur a été rencontré lors de la récupération des posts'); //Ou message d'erreur provenant de l'api
-                console.log(error)
             }
             
         }
@@ -29,32 +30,33 @@ const Post = () => {
         setIsLoaded(false);
     }, [])
     
-    const renderPost = (post) => {
-        console.log(post)
-        return <li key={post.id} className="Post">
-            <div className='Identification'>
+    const renderPost = (posts) => {
+        console.log(posts)
+        //essayer desctructuring 
+        //const {id, imageUrl, createdAt, title, description} = props; + retirer props partout!
+        return <li key={posts.id} className="Post">
+            <Card className='Card'>
                 <div className='DivProfil'>
-                    
+                    <img src={/*posts.userId.imageUrl*/ posts.imageUrl} className="ImgProfil" alt='photoPost' />
                 </div>
                 <div>
-                    
-                    {post.createdAt}
+                    {posts.createdAt}
                 </div>
                 <div className='DivPhoto'>
-                    
+                    <img src={posts.imageUrl} className="ImgPost" alt='photoPost' />
                 </div>
                 <div>
-                    {post.title}
-                    {post.description}
+                    {posts.title} <br/>
+                    {posts.description}
                 </div>
-                <Button type='button' text="J'aime" />
-                <Button type='button' className='Bouton-link__GreyButton' text="Je n'aime pas" />
-            </div>
+                <Button type='button' className='Bouton-link__GreyButton' text="Supprimer" />
+            </Card>
         </li>
     }
     // accolades = return
 
     return (
+    
         <ul>
             {posts.map(post => {
                 return renderPost(post)
@@ -62,7 +64,5 @@ const Post = () => {
         </ul>
     )
 }
-//<img src={post.photoProfil} className='PhotoProfil' alt='photoProfil' />
-//<img src={post.image} className="ImgPost" alt='photoPost' />
 
 export default Post;

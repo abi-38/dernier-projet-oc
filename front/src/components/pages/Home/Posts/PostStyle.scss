@@ -1,5 +1,7 @@
+@import "../../../../scss/variables";
+
 .PostStyle {
-    background-color: #dfe6ed;
+    background-color: $color-secondary;
     position: absolute;
     right: 0px;
     top: 50px;
@@ -9,38 +11,34 @@
         width: 69vw;
     }
     &__Posts {
-        background-color: #dfe6ed;
+        background-color: $color-secondary;
         position: absolute;
         right: 0px;
-        top: 524px;
+        top: 730px;
         width: 100vw;
         overflow-y: hidden !important;
         ul {
             padding-left: 0px;
             list-style: none;
         }
-        div > li > .Identification {
-            background-color: white;
-            padding-top: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 600px;
+        li > .Card {
             .DivProfil {
-                margin-top: 3px;
                 overflow: hidden;
-                width: 30vw;
-                height: 30vw;
-                border-radius: 30vw;
-                .PhotoProfil {
-                    width: 30vw;
-                    height: auto;
+                width: 72vw;
+                height: 72vw;
+                border-radius: 72vw;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-size: cover;
+                .ImgProfil {
+                    width: 153vw;
                 }
             }
             .DivPhoto {
-                margin-top: 3px;
                 overflow: hidden;
+                margin-left: -20vw;
+                width: 112vw;
                 .ImgPost {
                     width: 90vw;
                 }
@@ -52,4 +50,52 @@
         }
     }
     
+}
+
+@media (min-width: 768px) {
+    .PostStyle__Posts li > .Card .DivProfil {
+        overflow: hidden;
+        width: 40vw;
+        height: 40vw;
+        border-radius: 40vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        img.ImgProfil {
+            width: 72vw;
+        }
+    }
+    .PostStyle__Posts li > .Card .DivPhoto {
+        overflow: hidden;
+        margin-left: -9vw;
+        width: 56vw;
+        img.ImgPost {
+            width: 57vw;
+        }
+    }
+}
+
+@media (min-width: 998px) {
+    .PostStyle__Posts li > .Card .DivProfil {
+        overflow: hidden;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 20vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        img.ImgProfil {
+            width: 40vw;
+        }
+    }
+    .PostStyle__Posts li > .Card .DivPhoto {
+        overflow: hidden;
+        margin-left: -5vw;
+        width: 30vw;
+        img.ImgPost {
+            width: 30vw;
+        }
+    }
 }

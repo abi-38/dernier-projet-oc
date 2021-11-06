@@ -1,5 +1,7 @@
+@import "../../../scss/variables";
+
 .App-header {
-    background-color: white;
+    background-color: $color-simple;
     display: flex;
     justify-content: space-between;
     &__Logo {
@@ -8,12 +10,12 @@
     }
 }
 .h1 {
-  color: #d3455b;
+  color: $color-primary;
   margin-top: 30px;
   margin-bottom: 30px;
   padding-top: 30px;
   padding-bottom: 20px;
-  font-size: 1.8rem;
+  font-size: 1.8rem !important;
   &__h2 {
     font-size: 1rem;
     padding-left: 2vw;

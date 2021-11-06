@@ -1,14 +1,16 @@
+@import "../../../scss/variables";
+
 a.dropdown-toggle {
-    color: #d3455b;
+    color: $color-primary;
     font-size: 30px;
     margin-right: 10px;
     &:hover {
-        color: #d3455b;
+        color: $color-primary;
     }
     &::after {
         display: none;
     }
 }
 li > a.dropdown-item > a {
-    color: #d3455b !important;
+    color: $color-primary !important;
 }

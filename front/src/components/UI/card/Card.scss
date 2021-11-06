@@ -1,0 +1,33 @@
+@import "../../../scss/variables";
+
+.Card {
+    background-color: $color-simple;
+    margin-top: 60px;
+    padding-left: 9vw;
+    padding-right: 9vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 30px;
+    height: auto;
+}
+.Information {
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .Card {
+        margin-left: 22vw;
+        margin-right: 22vw;
+        margin-top: 80px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .Card {
+        margin-left: 35vw;
+        margin-right: 35vw;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
