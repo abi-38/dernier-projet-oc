@@ -1,6 +1,7 @@
 import React from 'react';
 import NewPost from './Posts/NewPost';
 import Post from './Posts/Post';
+// fonction de rappel à passer au composant NewPost
 
 const Home = () => {
     return (
@@ -16,4 +17,3 @@ const Home = () => {
 }
 
 export default Home;
-//<Post/> -> remettre ce composant que les autres pbs seront réglé

@@ -22,13 +22,17 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./user.model")(sequelize, Sequelize);
-db.post = require("./post.model")(sequelize, Sequelize);
+db.user = require("./user.model.js")(sequelize, Sequelize);
+db.post = require("./post.model.js")(sequelize, Sequelize);
 
-db.user.hasMany(db.post, { as: "posts" });
+db.user.hasMany(db.post, { as: "post" });
 db.post.belongsTo(db.user, {
-  foreignKey: "userId" // clé étrangère dans le modèle post -> la nommée dans ce sens
-  // si cette ligne n'est pas là par défaut il la créera !
+  foreignKey: "userId",
+  as: "user",
 });
+/*
+db.post.belongsTo(db.user, {
+  foreignKey: "imageUrl"
+});*/
 
 module.exports = db;
