@@ -7,9 +7,14 @@ import {
 } from "react-router-dom";
 import {useState} from 'react';
 import {useEffect} from 'react';
+import {createContext } from 'react';
 
+// mettre en place useContext + améliorer isConnected...
+const isConnected = localStorage.getItem( 'token' );
+const Context = createContext(isConnected);
 
 const Nav = () => {  
+    const value = isConnected;
     //const [tokenValue, setTokenValue] = useState(false);
     //const [error, setError] = useState(null);
     // context, cf. vidéo
@@ -32,28 +37,36 @@ const Nav = () => {
         }
         isConnected();
     }, [])*/
-    const isConnected = localStorage.getItem( 'token' );
+    //const isConnected = localStorage.getItem( 'token' );
 
     return (
-        <>
-        <MDBDropdownToggle tag='a'>
-            <FontAwesomeIcon icon={faBars} />
-        </MDBDropdownToggle>
-        <MDBDropdownMenu>
-            {!isConnected && 
-            <MDBDropdownItem>
-                <MDBDropdownLink><Link to="/">Se connecter</Link></MDBDropdownLink>
-            </MDBDropdownItem>}
-            {!isConnected &&
-            <MDBDropdownItem>
-                <MDBDropdownLink><Link to="/sinscrire">S'inscrire</Link></MDBDropdownLink>
-            </MDBDropdownItem>}
-            {isConnected &&
-            <MDBDropdownItem>
-                <MDBDropdownLink><Link to="/">Home</Link></MDBDropdownLink>
-            </MDBDropdownItem>}
-        </MDBDropdownMenu>
-        </>
+        <Context.Provider value={isConnected}>
+            <MDBDropdownToggle tag='a'>
+                <FontAwesomeIcon icon={faBars} />
+            </MDBDropdownToggle>
+            <MDBDropdownMenu>
+                {!isConnected && 
+                <MDBDropdownItem>
+                    <MDBDropdownLink><Link to="/">Se connecter</Link></MDBDropdownLink>
+                </MDBDropdownItem>}
+                {!isConnected &&
+                <MDBDropdownItem>
+                    <MDBDropdownLink><Link to="/sinscrire">S'inscrire</Link></MDBDropdownLink>
+                </MDBDropdownItem>}
+                {isConnected &&
+                <MDBDropdownItem>
+                    <MDBDropdownLink><Link to="/home">Home</Link></MDBDropdownLink>
+                </MDBDropdownItem>}
+                {isConnected &&
+                <MDBDropdownItem>
+                    <MDBDropdownLink><Link to="/account">Mon compte</Link></MDBDropdownLink>
+                </MDBDropdownItem>}
+                {isConnected &&
+                <MDBDropdownItem>
+                    <MDBDropdownLink><Link to="/">Se déconnecter</Link></MDBDropdownLink>
+                </MDBDropdownItem>}
+            </MDBDropdownMenu>
+        </Context.Provider>
     );
 }
 

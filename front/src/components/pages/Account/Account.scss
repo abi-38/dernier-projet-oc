@@ -1,0 +1,13 @@
+.DivProfilAccount {
+    overflow: hidden;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    .ImgProfil {
+        width: 20vw;
+    }
+}

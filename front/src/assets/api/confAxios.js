@@ -1,5 +1,6 @@
-const axios = require('axios').default;
-// éviter les require -> retirer !
+//const axios = require('axios').default;
+// à vérifier 
+import axios from 'axios';
 
 // Routes qui  ne nécessite pas d'être authentifié
 const ANONYMOUS_ROUTE = ['/api/signin', '/api/signup'];
@@ -9,23 +10,27 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.timeout = 60000;
 
 
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use( async (AxiosConfig) => {
     const token = localStorage.getItem('token');
-    if (config.url && !ANONYMOUS_ROUTE.includes(config.url)) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+    if (AxiosConfig.url && !ANONYMOUS_ROUTE.includes(AxiosConfig.url)) {
+        AxiosConfig.headers['Authorization'] = `Bearer ${token}`;
     }
 
-    return config;
-});
+    return AxiosConfig;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
-axios.interceptors.response.use(function (response) {
-    if (response.status === 401) {
+axios.interceptors.response.use( async (AxiosResponse) => {
+    if (AxiosResponse.status === 401) {
         if (localStorage.hasOwnProperty('token')) {
             localStorage.removeItem('token');
         }
     }
-    return response;
-}, function (error) {
+    return AxiosResponse;
+}, error => {
     return Promise.reject(error);
 });
 
@@ -37,35 +42,6 @@ export const POST = async (url, data) => {
     return await axios.post(url, data);
 }
 
-// pensez à mettre en place les interceptors !!
-
-/*
-axios.interceptors.request.use(
-    async (conf: AxiosRequestConfig) => {
-        const token = localStorage.getItem({key: 'token'});
-        if (conf.url && !ANONYMOUS_ROUTE.includes(conf.url)) {
-            conf.headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        return conf;
-    },
-    err => {
-        return Promise.reject(err);
-    }
-);
-
-axios.interceptors.response.use(
-    async (response: AxiosResponse) => {
-        if (response.status === 401) {
-            if (localStorage.hasOwnProperty( {v:'token'} )) {
-                localStorage.removeItem( {key: 'token'} );
-            }
-        }
-    },
-    err => {
-        console.log(err);
-    }
-);
-*/
-
-
+export const DELETE = async (url, data) => {
+    return await axios.delete(url, data);
+}

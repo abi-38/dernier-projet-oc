@@ -91,3 +91,62 @@ exports.login = (req, res, next) => {
         throw 'Email ou mot de passe non valide !';
     }
 };
+
+exports.getUser = (req, res, next) => {
+    User.findByPk( req.user.dataValues.id) // findByPk à utiliser QUE pour récupérer un id
+    .then((user) => {
+    console.log(req.user)
+
+    if(user === null) {
+    res.status(400).json({
+      message: "L'utilisateur n'existe pas"
+    });
+    return;
+    }
+    return res.status(200).json(user); 
+    })
+   .catch(error => res.status(404).json({ error: "Quelque chose s'est mal passé pendant la récupération de l'utilisateur" })); 
+}
+
+exports.deleteUser = (req, res, next) => {
+    User.findByPk( req.params.id )
+    .then(user => {
+        if(req.file) {
+        const filename = user.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+            User.destroy({where: {id: req.params.id} }) 
+            .then(num => {
+            if(num == 1) {
+                return res.status(200).json({ message: "User was deleted successfully !" });
+            } else {
+                return res.status(400).json({
+                message: `Can't delete User with id=${id}. Maybe User wasn't found`
+                });
+            }
+            })
+            .catch((err) => {
+            return res.status(500).json({
+                message: `Error deleting User with id=${id}`
+            });
+            });
+        });
+        } else {
+        User.destroy({where: {id: req.params.id} }) 
+        .then(num => {
+            if(num == 1) {
+            return res.status(200).json({ message: "User was deleted successfully !" });
+            } else {
+            return res.status(400).json({
+                message: `Can't delete User with id=${id}. Maybe User wasn't found`
+            });
+            }
+        })
+        .catch((err) => {
+            return res.status(500).json({
+            message: `Error deleting User with id=${id}`
+            });
+        });
+        }
+    })
+    .catch(error => res.status(500).json({  message: "Le user n'existe pas"  }));
+}
