@@ -6,15 +6,19 @@
     right: 0px;
     top: 50px;
     width: 100vw;
+    height: 900px;
     overflow-y: hidden !important;
     .Identification > form > textarea {
         width: 69vw;
+    }
+    &__Account {
+        height: auto;
     }
     &__Posts {
         background-color: $color-secondary;
         position: absolute;
         right: 0px;
-        top: 730px;
+        top: 790px;
         width: 100vw;
         overflow-y: hidden !important;
         ul {

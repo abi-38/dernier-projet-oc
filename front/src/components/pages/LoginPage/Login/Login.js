@@ -87,15 +87,19 @@ const Login = () => {
                     email: emailValue,
                     password: passwordValue
                 } )
-                if(response.status === 200 ) {
+                if(response.status === 200) {
                     const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
                     console.log('Utilisateur bien connécté !')
                     //comment envoyé un success message à l'utilisateur ?
                     localStorage.setItem('token', data.token); // accolade = return juste pour les promesses .then
                     history.push("/home");
+                    setError(false);
+                } else if (response.status === 401 || response.status === 500) {
+                    setError(true);
+                    console.warn(error)
                 } else {
-                    setError('Une erreur a été rencontré lors de la connexion au compte') //mettre message api
-                    console.log(error);
+                    setError(true);
+                    console.warn(error)
                 }
             //}   
         }
@@ -138,11 +142,12 @@ const Login = () => {
                 </form>
             </Card>
         <p className='Information'>Vous n'avez pas de compte ? <Link to="/sinscrire">Inscrivez-vous !</Link></p>
+        
     </div>
     );
 }
 
-/*
+/*<div>{error && "<p>Une erreur est survenue !</p>"}</div>
 {SignInList.map(champ => {
     return <div key={champ.id} className="Input">
     <Input champ={champ} />

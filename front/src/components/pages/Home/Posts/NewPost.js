@@ -53,25 +53,25 @@ const NewPost = () => {
     //pour que le nouveau post s'affiche ??
 	const submitHandler = async (event) => {
         event.preventDefault();
+        
 		const formData = new FormData();
 		formData.append('imageUrl', selectedFile);
         formData.append('title', titleValue);
         formData.append('description', descriptionValue);
+        console.warm(formData);
 
         const response = await POST( '/api/post', formData)
         if(response.status === 201 ) {
             console.log('Post bien créé !');
             setFormIsValid(true);
             setError(false)
-            setFormIsValid(false);
-            setError(null)
         } else {
             // ce chemin n'est pas atteint en cas d'erreur pk ?
             console.log(error);
             setError(true)
         }
 	};
-
+    
     const renderSuccessMessage = () => {
         return formIsValid && `Votre post a bien été créé !`;
     }
@@ -79,8 +79,9 @@ const NewPost = () => {
     const renderErrorMessage = () => {
         return error && `Une erreure est survenue pendant la création du post !`;
     }
-
+    
     return (
+        
         <Card className='Card'>
             <h1 className='h1' >Derniers Post</h1>
             <form onSubmit={submitHandler}> 
@@ -113,17 +114,19 @@ const NewPost = () => {
                         name="file" 
                         className="Bouton-link__SmallMarge" 
                         onChange={changeHandler}
-                        //{ref={this.fileInput} }
                     />
                     {isFilePicked ? (
                         <p>L'image est sélectionnée</p>
                         ) : (
                         <p>Choisir une image</p>
-                        )}
+                        )
+                    }
                 </div>
-                <div><p>{renderSuccessMessage()}{renderErrorMessage()}</p></div>
 				<Button type='submit' text="Publier" />
+
+                <div><p>{renderSuccessMessage()}{renderErrorMessage()}</p></div>
             </form>
+            
         </Card>
     );
 }

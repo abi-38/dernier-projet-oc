@@ -6,6 +6,7 @@ import '../../../UI/button/Button.scss';
 import {DELETE, GET} from '../../../../assets/api/confAxios';
 //const GET = require('../api/confAxios'); -> interdit + ne pas mettre le require avant import
 import Card from "../../../UI/card/Card";
+import DayJS from 'react-dayjs';
 
 const Post = () => {
     const [error, setError] = useState(null);
@@ -68,8 +69,8 @@ const Post = () => {
                 <div className='DivProfil'>
                     <img src={posts.imageUrl} className="ImgProfil" alt='photoPost' />
                 </div>
-                <div>
-                    {posts.createdAt}
+                <div>                    
+                    <p>Publié le : </p><DayJS format="DD-MM-YYYY" date={posts.createdAt}/>
                 </div>
                 <div className='DivPhoto'>
                     <img src={posts.imageUrl} className="ImgPost" alt='photoPost' />
