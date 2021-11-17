@@ -38,6 +38,10 @@ export const GET = async (url) => {
     return await axios.get(url);
 }
 
+export const PUT = async (url, data) => {
+    return await axios.put(url, data);
+}
+
 export const POST = async (url, data) => {
     return await axios.post(url, data);
 }

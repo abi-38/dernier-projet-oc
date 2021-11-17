@@ -150,3 +150,60 @@ exports.deleteUser = (req, res, next) => {
     })
     .catch(error => res.status(500).json({  message: "Le user n'existe pas"  }));
 }
+
+exports.updateUser = (req, res, next) => {
+    const id = req.params.id;
+    const userObject = req.file ?
+      {
+        ...req.body, 
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      } : { ...req.body };
+    User.update(userObject, {where: { id: id }})
+    .then(num => {
+      if(num == 1) {
+        res.status(200).json({ message: "User was updated successfully !" });
+      } else {
+        res.status(400).json({
+          message: `Can't update User with id=${id}. Maybe User wasn't found or req.body is empty`
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: `Error updating User with id=${id}`
+      });
+    });
+};
+
+exports.updatePasswordUser = (req, res, next) => {
+    const id = req.params.id;
+    console.warn(id);
+    const mdpReg = new RegExp(/^[\w\-]{6,}$/);
+    const validMdp = mdpReg.test(req.body.password); 
+    console.warn(validMdp);
+
+    if(validMdp) {
+        bcrypt.hash(req.body.password, 10)
+        .then(
+            hash => {
+                User.update({password: hash}, {where: { id: id }})
+                .then(num => {
+                    if(num == 1) {
+                      res.status(200).json({ message: "User was updated successfully !" });
+                    } else {
+                      res.status(400).json({
+                        message: `Can't update User with id=${id}. Maybe User wasn't found or req.body is empty`
+                      });
+                    }
+                })
+        })
+        .catch((err) => {
+            res.status(500).json({
+              message: `Error updating User with id=${id}`
+            });
+          });
+
+    } else {
+        return res.status(400).json({ error: 'Email ou mot de passe non valide !' })
+    }
+};
