@@ -10,9 +10,7 @@ import Card from "../../../UI/card/Card";
 
 const NewPost = () => {
     const [selectedFile, setSelectedFile] = useState(null);
-	const [isFilePicked, setIsFilePicked] = useState(false);
-
-    //this.fileInput = React.createRef();
+	const [isFilePicked, setIsFilePicked] = useState(false);;
 
     const [formIsValid, setFormIsValid] = useState ( false );
     const [titleValue, setTitleValue] = useState ( "" );
@@ -68,7 +66,7 @@ const NewPost = () => {
         } else {
             // ce chemin n'est pas atteint en cas d'erreur pk ?
             console.log(error);
-            setError(true)
+            setError(true);
         }
 	};
     
@@ -77,6 +75,7 @@ const NewPost = () => {
     }
 
     const renderErrorMessage = () => {
+        console.warn(error);
         return error && `Une erreure est survenue pendant la création du post !`;
     }
     
@@ -123,7 +122,6 @@ const NewPost = () => {
                     }
                 </div>
 				<Button type='submit' text="Publier" />
-
                 <div><p>{renderSuccessMessage()}{renderErrorMessage()}</p></div>
             </form>
             

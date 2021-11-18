@@ -77,36 +77,30 @@ const Login = () => {
     const validatePasswordHandler = () => {
         setPasswordIsValid(passwordValue.length > 6);
         setFormIsValid(passwordValue.length > 6 && emailValue.includes('@'));
-    }
-    //useEffect(() => {    
-        const submitHandler = async (event) => {
-            event.preventDefault();
-            //if (formIsValid) {
-                //authCtx.onLogin(emailState.value, passwordState.value);
-                const response = await POST( '/api/auth/login', {
-                    email: emailValue,
-                    password: passwordValue
-                } )
-                if(response.status === 200) {
-                    const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
-                    console.log('Utilisateur bien connécté !')
-                    //comment envoyé un success message à l'utilisateur ?
-                    localStorage.setItem('token', data.token); // accolade = return juste pour les promesses .then
-                    history.push("/home");
-                    setError(false);
-                } else if (response.status === 401 || response.status === 500) {
-                    setError(true);
-                    console.warn(error)
-                } else {
-                    setError(true);
-                    console.warn(error)
-                }
-            //}   
+    }   
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        const response = await POST( '/api/auth/login', {
+            email: emailValue,
+            password: passwordValue
+        } )
+        console.log(response);
+        if(response.status === 200) {
+            const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
+            console.log('Utilisateur bien connécté !')
+            localStorage.setItem('token', data.token); // accolade = return juste pour les promesses .then
+            history.push("/home");
+            setError(false);
+        } else if (response.status === 400 || response.status === 500) {
+            //message d'erreur pas atteint...
+            console.log('toto');
+            setError(true);
+            console.warn(error)
+        } else {
+            setError(true);
+            console.warn(error)
         }
-        //setIsLoaded(true)
-        //submitHandler();
-        //setIsLoaded(false);
-    //}, [])
+    }
 
     return (
         <div className="Sinscire">
@@ -146,30 +140,5 @@ const Login = () => {
     </div>
     );
 }
-
-/*<div>{error && "<p>Une erreur est survenue !</p>"}</div>
-{SignInList.map(champ => {
-    return <div key={champ.id} className="Input">
-    <Input champ={champ} />
-    </div>
-    })
-} 
-*/
-
-/*
-const Login = ( {props: any} ) => { 
-
-    return (
-      <form>
-        {seConnecterList.map(champ => {
-            return <div key={champ.id} className="Input">
-            <Input champ={champ} />
-            </div>
-            })
-        }
-        <Button type="button" className='Bouton-link__Connection' text='Se connecter' />
-      </form>
-    );
-}*/
 
 export default Login;

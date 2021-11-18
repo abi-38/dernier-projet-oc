@@ -71,25 +71,19 @@ const SignUp = () => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        //if (formIsValid) {
-        //authCtx.onLogin(emailState.value, passwordState.value);
-        //const formData = new FormData();
-        //formData.append('File', selectedFile);
-            const response = await POST( '/api/auth/signup', {
-              name: nameValue,
-              email: emailValue,
-              password: passwordValue
-              //imageUrl: selectedFile
-            })
-            if(response.status === 201 ) {
-              console.log('Utilisateur créé !')
-              //comment envoyé un success message à l'utilisateur ?
-              history.push("/");
-            } else {
-              setError('Une erreur a été rencontré lors de la création du compte') //mettre message api
-              console.log(error);
-            }
-        //}   
+      const response = await POST( '/api/auth/signup', {
+        name: nameValue,
+        email: emailValue,
+        password: passwordValue
+        //imageUrl: selectedFile
+      })
+      if(response.status === 201 ) {
+        console.log('Utilisateur créé !')
+        history.push("/");
+      } else {
+        setError('Une erreur a été rencontré lors de la création du compte') //mettre message api
+        console.log(error);
+      }
     }
 
     return (
@@ -142,35 +136,3 @@ const SignUp = () => {
   }
 
 export default SignUp;
-
-/*
-<input type="file" name="file" onChange={changeFileHandler} />
-  {isSelected ? (
-  <div>
-    <p>Filename: {selectedFile.name}</p>
-    <p>Filetype: {selectedFile.type}</p>
-    <p>Size in bytes: {selectedFile.size}</p>
-    <p>
-      lastModifiedDate:{' '}
-      {selectedFile.lastModifiedDate.toLocaleDateString()}
-    </p>
-  </div>
-) : (
-  <p>Select a file to show details</p>
-)}
-
-<div>
-  <label for="passwordConfirmation">Confirmation de mot de passe :</label>
-  <input
-    id="passwordConfirmation"
-    label="Confirmation de mot de passe"
-    //isValid={passwordConfirmationIsValid}
-    type="password"
-    value={passwordConfirmationValue}
-    onChange={passwordConfirmationChangeHandler}
-    onBlur={validatePasswordConfirmationHandler}
-    className="Input"
-  />
-</div>
-
-*/

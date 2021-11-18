@@ -88,7 +88,7 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
     } else {
-        throw 'Email ou mot de passe non valide !';
+        return res.status(400).json({ error: 'Email ou mdp invalide !' });
     }
 };
 
@@ -109,6 +109,7 @@ exports.getUser = (req, res, next) => {
 }
 
 exports.deleteUser = (req, res, next) => {
+    // ici vérifier l'id token correspond au front
     User.findByPk( req.params.id )
     .then(user => {
         if(req.file) {

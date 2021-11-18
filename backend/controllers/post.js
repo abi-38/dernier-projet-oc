@@ -3,6 +3,7 @@ const User = db.user;
 const Post = db.post;
 const Op = db.sequelize.Op; // à quoi ça sert ? est-ce bien utile ?
 const fs = require('fs'); // pour les fichiers img
+const userModel = require("../models/user.model");
 
 // .save() n'est pas nécessaire en sequelize
 
@@ -56,9 +57,10 @@ exports.findAllPost = (req, res, next) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%`} }: null; */
 
-    Post.findAll()
+    Post.findAll() //{include: user}
     .then((posts) => {
       return res.status(200).json(posts); 
+      // faire une jointure pour récupérer , cf. lien envoyé
     })
     .catch((err) => {
       return res.status(500).json({

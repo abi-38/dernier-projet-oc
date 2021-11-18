@@ -14,8 +14,8 @@ const Deconnexion = () => {
         event.preventDefault();
         
         console.log('Utilisateur bien supprimé !');
-        history.push("/");
         localStorage.removeItem('token');
+        history.push("/");
     }
 
     handlerDeconnexion();

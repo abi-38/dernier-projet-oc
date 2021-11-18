@@ -23,7 +23,7 @@ axios.interceptors.request.use( async (AxiosConfig) => {
     }
 );
 
-axios.interceptors.response.use( async (AxiosResponse) => {
+/*axios.interceptors.response.use( async (AxiosResponse) => {
     if (AxiosResponse.status === 401) {
         if (localStorage.hasOwnProperty('token')) {
             localStorage.removeItem('token');
@@ -32,7 +32,7 @@ axios.interceptors.response.use( async (AxiosResponse) => {
     return AxiosResponse;
 }, error => {
     return Promise.reject(error);
-});
+});*/
 
 export const GET = async (url) => {
     return await axios.get(url);
