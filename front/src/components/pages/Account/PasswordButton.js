@@ -43,7 +43,7 @@ const PasswordButton = (props) => {
                 >
                 </input>
             </div>
-            <Button type='submit' className='Bouton-link__GreyButton' text="Changer son mot de passe" />
+            <Button type='submit' className='Bouton-link__SmallMarge Bouton-link__GreyButton' text="Changer son mot de passe" />
         </form>
     )
 }

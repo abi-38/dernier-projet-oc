@@ -32,7 +32,7 @@ const ModifiedPost = (props) => {
 
     return (
     
-        <Button type='button' value={props.postId} onClick={handlerModifiedPostButton} className='Bouton-link__GreyButton' text="Modifier" />
+        <Button type='button' value={props.postId} onClick={handlerModifiedPostButton} className='Bouton-link__SmallMarge Bouton-link__GreyButton' text="Modifier" />
     )
 }
 

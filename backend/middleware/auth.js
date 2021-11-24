@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const db = require("../models");
 const User = db.user;
-//require('dotenv').config(); -> on verra plus tard
 // pour installer dotenv -> npm install dotenv
 // voir doc sur internet !
  
@@ -17,12 +16,12 @@ module.exports = async (req, res, next) => {
         // faire la même chose pour la photo de profil du user
         const user = await User.findByPk(userId)
         req.user = user
-        console.warn(req.user)
-        console.warn(req.user.dataValues.imageUrl)
         next();
     }
     catch(error) {
         console.log(error)
+        console.warn('toto')
+
         return res.status(401).json({ error: error | 'Utilisateur non authentifié !' })
     }
 };

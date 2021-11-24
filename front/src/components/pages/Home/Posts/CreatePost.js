@@ -1,6 +1,4 @@
-import React from 'react';
 import {useState} from 'react';
-import {useEffect} from 'react';
 import Button from '../../../UI/button/Button';
 import '../../../UI/button/Button.scss';
 import '../../../Layout/Header/Header.scss';
@@ -8,7 +6,7 @@ import './PostStyle.scss';
 import {POST} from '../../../../assets/api/confAxios';
 import Card from "../../../UI/card/Card";
 
-const NewPost = () => {
+const CreatePost = (props) => {
     const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);;
 
@@ -16,11 +14,10 @@ const NewPost = () => {
     const [titleValue, setTitleValue] = useState ( "" );
     const [titleIsValid, setTitleIsValid] = useState ( null );
     const [descriptionValue, setDescriptionValue] = useState ( "" );
-    const [descriptionIsValid, setDescriptionValid] = useState ( null );
+    const [descriptionIsValid, setDescriptionValid] = useState ( null )
+    
 
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [posts, setPosts] = useState([]);
 
     const titleChangeHandler = (event) => {
         setTitleValue(event.target.value) 
@@ -56,19 +53,25 @@ const NewPost = () => {
 		formData.append('imageUrl', selectedFile);
         formData.append('title', titleValue);
         formData.append('description', descriptionValue);
-        console.warm(formData);
+        //console.warm(formData);
+
+        
 
         const response = await POST( '/api/post', formData)
         if(response.status === 201 ) {
             console.log('Post bien créé !');
+            setError(false);
             setFormIsValid(true);
-            setError(false)
+            //cleanForm()
         } else {
             // ce chemin n'est pas atteint en cas d'erreur pk ?
             console.log(error);
             setError(true);
         }
 	};
+
+    
+    
     
     const renderSuccessMessage = () => {
         return formIsValid && `Votre post a bien été créé !`;
@@ -129,4 +132,4 @@ const NewPost = () => {
     );
 }
 
-export default NewPost;
+export default CreatePost;

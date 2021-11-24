@@ -24,9 +24,15 @@
     }
 }
 
-@media (min-width: 998px) {
+@media (min-width: 1000px) {
     .Bouton-link {
-        width: 20vw;
+        width: 25vw;
+    }
+}
+
+@media (min-width: 1600px) {
+    .Bouton-link {
+        width: 14vw;
     }
 }
 

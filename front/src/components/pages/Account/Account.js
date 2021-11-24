@@ -1,6 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
-import {useEffect} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import '../../UI/button/Button.scss';
 import '../../Layout/Header/Header.scss';
 import '../../pages/Home/Posts/PostStyle.scss';
@@ -11,12 +10,15 @@ import DeleteButton from './DeleteButton';
 import PasswordButton from './PasswordButton';
 import DescriptionButton from './DescriptionButton';
 import PictureButton from './PictureButton';
+import AuthContext from '../../../hooks/Auth-context';
+import { Link, useHistory, Redirect } from "react-router-dom";
 
 const Account = () => {
-    const [error, setError] = useState(null);
+    const ctx = useContext(AuthContext);
+    const history = useHistory();  const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [user, setUser] = useState({});
-    
+
     useEffect(() => {
         const loadUser = async () => {
             const response =  await GET('/api/auth/me'); 
@@ -36,6 +38,10 @@ const Account = () => {
         loadUser();
         setIsLoaded(false);
     }, [])
+
+    if(!ctx.isLogin()) {
+        return <Redirect push to="/" />
+    }
     
     return (
         <div className='PostStyle PostStyle__Account'>

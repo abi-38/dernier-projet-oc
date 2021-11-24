@@ -5,25 +5,6 @@ const Op = db.sequelize.Op; // à quoi ça sert ? est-ce bien utile ?
 const fs = require('fs'); // pour les fichiers img
 const userModel = require("../models/user.model");
 
-// .save() n'est pas nécessaire en sequelize
-
-/*
-exports.createPost = (req, res) => {
-  return Post.create({
-    title: res.title, 
-    description: res.description,
-    userId: req.userId
-  })
-  .then((post) => {
-    return post; 
-  })
-  .catch((err) => {
-    console.log(err);
-      
-    });
-  };
-*/
-
 exports.createPost = (req, res, next) => {
   //ici faire les console.log() -> regarder dans le terminal du back
   if(!req.body.title) {
@@ -52,15 +33,22 @@ exports.createPost = (req, res, next) => {
   });
 };
 
-exports.findAllPost = (req, res, next) => {
-  /* 
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%`} }: null; */
 
-    Post.findAll() //{include: user}
+exports.findAllPost = (req, res, next) => {
+
+    Post.findAll({
+      include: [{
+      model: User, attributes: // faire une jointure pour récupérer , cf. lien envoyé
+          ['name', 'imageUrl'],
+      as: 'user'
+      }],
+      order: [
+         ['updatedAt', 'DESC'] // trie par date de modification des posts
+      ]
+    })
+    // {include: User}
     .then((posts) => {
-      return res.status(200).json(posts); 
-      // faire une jointure pour récupérer , cf. lien envoyé
+      return res.status(200).json(posts);
     })
     .catch((err) => {
       return res.status(500).json({
