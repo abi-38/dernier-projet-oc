@@ -7,6 +7,8 @@ import {POST} from '../../../../assets/api/confAxios';
 import Card from "../../../UI/card/Card";
 
 const CreatePost = (props) => {
+    const {onSubmit} = props;
+
     const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);;
 
@@ -43,34 +45,15 @@ const CreatePost = (props) => {
         
 		setIsFilePicked(true);
 	};
+	
+    const handleOnSubmit = (formData) => {
+        onSubmit(formData);
+    }
 
-    // mettre dans un useContext pour ne pas avoir à recharger la page
-    //pour que le nouveau post s'affiche ??
-	const submitHandler = async (event) => {
-        event.preventDefault();
-        
-		const formData = new FormData();
-		formData.append('imageUrl', selectedFile);
-        formData.append('title', titleValue);
-        formData.append('description', descriptionValue);
-        //console.warm(formData);
-
-        
-
-        const response = await POST( '/api/post', formData)
-        if(response.status === 201 ) {
-            console.log('Post bien créé !');
-            setError(false);
-            setFormIsValid(true);
-            //cleanForm()
-        } else {
-            // ce chemin n'est pas atteint en cas d'erreur pk ?
-            console.log(error);
-            setError(true);
-        }
-	};
-
-    
+    const formData = new FormData();
+    formData.append('imageUrl', selectedFile);
+    formData.append('title', titleValue);
+    formData.append('description', descriptionValue);
     
     
     const renderSuccessMessage = () => {
@@ -86,7 +69,7 @@ const CreatePost = (props) => {
         
         <Card className='Card'>
             <h1 className='h1' >Derniers Post</h1>
-            <form onSubmit={submitHandler}> 
+            <form onSubmit={() => handleOnSubmit(formData)}> 
                 <div className='Input'>
                     <label className='h1__h2' for="description">Exprimez-vous</label>
                     <textarea 
@@ -125,7 +108,6 @@ const CreatePost = (props) => {
                     }
                 </div>
 				<Button type='submit' text="Publier" />
-                <div><p>{renderSuccessMessage()}{renderErrorMessage()}</p></div>
             </form>
             
         </Card>

@@ -89,17 +89,16 @@ const Login = () => {
             ctx.onLogin(data);
             history.push("/home");
         } catch (e) {
-            //setError(response.message);
-            console.log(e);
+            setError(e.response.data.error);
         }
     }
 
     return (
         <>
-            {error && <div>{error}</div>}
             <div className="Sinscire">
                 <Card>
                     <h1 className='h1'>Identifiez-vous</h1>
+                    {error && <div>{error}</div>}
                     <form onSubmit={handlerSubmit}>
                         <div className="Input">
                             <label for="email">E-mail :</label>
