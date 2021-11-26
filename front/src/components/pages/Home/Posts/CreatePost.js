@@ -1,14 +1,13 @@
-import React from 'react';
 import {useState} from 'react';
-import {useEffect} from 'react';
 import Button from '../../../UI/button/Button';
 import '../../../UI/button/Button.scss';
 import '../../../Layout/Header/Header.scss';
 import './PostStyle.scss';
-import {POST} from '../../../../assets/api/confAxios';
 import Card from "../../../UI/card/Card";
 
-const NewPost = () => {
+const CreatePost = (props) => {
+    const {onAddPostHandler} = props;
+
     const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);;
 
@@ -16,20 +15,20 @@ const NewPost = () => {
     const [titleValue, setTitleValue] = useState ( "" );
     const [titleIsValid, setTitleIsValid] = useState ( null );
     const [descriptionValue, setDescriptionValue] = useState ( "" );
-    const [descriptionIsValid, setDescriptionValid] = useState ( null );
+    const [descriptionIsValid, setDescriptionValid] = useState ( null )
+    
 
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [posts, setPosts] = useState([]);
 
     const titleChangeHandler = (event) => {
         setTitleValue(event.target.value) 
       };
   
     const descriptionChangeHandler = (event) => {
-    setDescriptionValue(event.target.value) 
+        setDescriptionValue(event.target.value) 
     };
 
+    /*
     const validateTitleHandler = () => {
         setTitleIsValid(titleValue.length > 3);
         setFormIsValid(titleValue.length > 3 && descriptionValue.length > 3);
@@ -38,7 +37,7 @@ const NewPost = () => {
     const validateDescriptionHandler = () => {
         setDescriptionValid(descriptionValue.length > 3);
         setFormIsValid(titleValue.length > 3 && descriptionValue.length > 3);
-    }
+    }*/
 
 	const changeHandler = (e) => {
         e.preventDefault();
@@ -56,28 +55,9 @@ const NewPost = () => {
 		formData.append('imageUrl', selectedFile);
         formData.append('title', titleValue);
         formData.append('description', descriptionValue);
-        console.warm(formData);
 
-        const response = await POST( '/api/post', formData)
-        if(response.status === 201 ) {
-            console.log('Post bien créé !');
-            setFormIsValid(true);
-            setError(false)
-        } else {
-            // ce chemin n'est pas atteint en cas d'erreur pk ?
-            console.log(error);
-            setError(true);
-        }
+        onAddPostHandler(formData);
 	};
-    
-    const renderSuccessMessage = () => {
-        return formIsValid && `Votre post a bien été créé !`;
-    }
-
-    const renderErrorMessage = () => {
-        console.warn(error);
-        return error && `Une erreure est survenue pendant la création du post !`;
-    }
     
     return (
         
@@ -93,7 +73,6 @@ const NewPost = () => {
                         cols="33" 
                         placeholder="Ajouter du texte..."
                         onChange={descriptionChangeHandler}
-                        onBlur={validateDescriptionHandler}
                     >
                     </textarea>
                 </div>
@@ -103,7 +82,6 @@ const NewPost = () => {
                         id="titre" 
                         name="titre" 
                         onChange={titleChangeHandler}
-                        onBlur={validateTitleHandler}
                     >
                     </input>
                 </div>
@@ -122,11 +100,10 @@ const NewPost = () => {
                     }
                 </div>
 				<Button type='submit' text="Publier" />
-                <div><p>{renderSuccessMessage()}{renderErrorMessage()}</p></div>
             </form>
             
         </Card>
     );
 }
 
-export default NewPost;
+export default CreatePost;

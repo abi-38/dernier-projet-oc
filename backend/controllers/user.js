@@ -162,7 +162,7 @@ exports.updateUser = (req, res, next) => {
     User.update(userObject, {where: { id: id }})
     .then(num => {
       if(num == 1) {
-        res.status(200).json({ message: "User was updated successfully !" });
+        res.status(200).json(userObject); // { message: "User was updated successfully !" }
       } else {
         res.status(400).json({
           message: `Can't update User with id=${id}. Maybe User wasn't found or req.body is empty`

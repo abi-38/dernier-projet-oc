@@ -1,67 +1,36 @@
-import React from 'react';
-import {useState} from 'react';
-import {useEffect} from 'react';
-import {GET} from '../../../../assets/api/confAxios';
-//const GET = require('../api/confAxios'); -> interdit + ne pas mettre le require avant import
 import Card from "../../../UI/card/Card";
 import DayJS from 'react-dayjs';
-import DeletePost from './DeletePost';
-import ModifiedPost from './ModifiedPost';
+import Button from "../../../UI/button/Button";
 
-const Post = () => {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [posts, setPosts] = useState([]);
+const Post = (props) => {
+    const {post, onClick} = props;
 
-    useEffect(() => {
-        const loadPosts = async () => {
-            const response =  await GET('/api/post');
-            const data = response.data;
-            if (response.status === 200) { //Base sur le code de status du retour de l'api
-                setPosts(data);
-                console.log('Chargement des posts réussis !');
-            } else {
-                setError('Une erreur a été rencontré lors de la récupération des posts'); //Ou message d'erreur provenant de l'api
-            }
-            
-        }
-        setIsLoaded(true)
-        loadPosts();
-        setIsLoaded(false);
-    }, [])
-    
-    const renderPost = (posts) => {
-        
-        const postId = posts.id;
-        return <li key={postId} className="Post">
-            <Card className='Card'>
-                <div className='DivProfil'>
-                    <img src={posts.imageUrl} className="ImgProfil" alt='photoPost' />
-                </div>
-                <div className="DatePost">                    
-                    <p>Publié le : </p><DayJS format="DD-MM-YYYY" date={posts.createdAt}/>
-                </div>
-                <div className='DivPhoto'>
-                    <img src={posts.imageUrl} className="ImgPost" alt='photoPost' />
-                </div>
-                <div>
-                    {posts.title} <br/>
-                    {posts.description}
-                </div>
-                <ModifiedPost postId={postId}/>
-                <DeletePost postId={postId}/>
-            </Card>
-        </li>
+    const handleDelete = (id) => {
+        onClick(id);
     }
 
-    return (
-    
-        <ul>
-            {posts.map(post => {
-                return renderPost(post)
-            })}
-        </ul>
-    )
+    return <li key={post.id} className="Post">
+        <Card className='Card'>
+            <div>
+                {post.userId && post.user.name}
+            </div>
+            <div className='DivProfil'>
+                <img src={post.userId && post.user.imageUrl} className="ImgProfil" alt='photoPost' />
+            </div>
+            <div className="DatePost">                    
+                <p>Publié le : </p><DayJS format="DD-MM-YYYY" date={post.createdAt}/>
+            </div>
+            <div className='DivPhoto'>
+                <img src={post.imageUrl} className="ImgPost" alt='photoPost' />
+            </div>
+            <div>
+                {post.title} <br/>
+                {post.description}
+            </div>
+            <Button text='Supprimer' onClick={() => handleDelete(post.id)} />
+            
+        </Card>
+    </li>
 }
 
 export default Post;

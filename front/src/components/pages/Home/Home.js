@@ -1,18 +1,18 @@
-import React from 'react';
-import NewPost from './Posts/NewPost';
-import Post from './Posts/Post';
+import React, { useContext } from 'react';
+import Posts from './Posts/Posts';
 // fonction de rappel à passer au composant NewPost
+import AuthContext from '../../../context/Auth-context';
+import { Redirect } from "react-router-dom";
 
 const Home = () => {
+    const ctx = useContext(AuthContext);
+
+    if(!ctx.isLogin()) {
+        return <Redirect push to="/" />
+    }
+
     return (
-        <>
-        <div className='PostStyle'>
-            <NewPost/>
-        </div>
-        <div className='PostStyle__Posts'>
-            <Post/>
-        </div>
-        </>
+        <Posts/>
     );
 }
 

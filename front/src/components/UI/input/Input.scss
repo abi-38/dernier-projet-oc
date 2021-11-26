@@ -23,8 +23,14 @@
   }
 }
 
-@media (min-width: 998px) {
+@media (min-width: 1000px) {
   .Input > input, .Input > textarea {
-    width: 20vw;
+    width: 25vw;
+  }
+}
+
+@media (min-width: 1600px) {
+  .Input > input, .Input > textarea {
+    width: 14vw;
   }
 }

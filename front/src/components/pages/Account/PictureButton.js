@@ -2,9 +2,10 @@ import React from 'react';
 import {useState} from 'react';
 import Button from '../../UI/button/Button';
 import '../../UI/button/Button.scss';
-import {PUT} from '../../../assets/api/confAxios';
 
 const PictureButton = (props) => {
+    const {onChangePictureHandler} = props;
+
     const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -17,24 +18,17 @@ const PictureButton = (props) => {
 		setIsFilePicked(true);
 	};
 
-    const handlerChangePictureButton = async (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
 		formData.append('imageUrl', selectedFile);
 
-        const response = await PUT( '/api/auth/' + props.userId, formData)
-        if(response.status === 201 ) {
-            console.log('User bien modifié !');
-            setError(false)
-        } else {
-            console.log(error);
-            setError(true)
-        }
+        onChangePictureHandler(formData);        
     }
     
     return (
-        <form onSubmit={handlerChangePictureButton}>
+        <form onSubmit={submitHandler}>
             <input 
                 type="file" 
                 name="file" 

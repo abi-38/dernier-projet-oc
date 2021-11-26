@@ -1,27 +1,23 @@
 @import "../../../scss/variables";
 
 .Sinscire {
-    background-color: $color-secondary;
     position: absolute;
-    right: 0px;
+    right: 8vw;
     top: 50px;
-    width: 100vw;
-    height: 750px;
-    overflow-y: hidden !important;
 }
 
 
-@media (min-width: 768px) {
+@media (min-width: 760px) {
     .Sinscire {
-        left: 95.33/*-732.15px*/;
+        left: 95.33;
         top: 50px;
         width: 100vw;
+        right: -22vw;
     }
 }
 
 @media (min-width: 1000px) {
     .Sinscire {
-        left: -98.09vw/*-97.5VW*/;
-        height: 900px;
+        right: -37vw;
     }
 }

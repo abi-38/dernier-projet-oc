@@ -3,31 +3,43 @@
 .Card {
     background-color: $color-simple;
     margin-top: 60px;
-    padding-left: 9vw;
-    padding-right: 9vw;
-    margin-left: 5vw;
-    margin-right: 5vw;
-    margin-bottom: 30px;
-    height: auto;
+    padding: 9vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 81vw;
 }
 .Information {
     font-size: 0.7rem;
     text-align: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 760px) {
     .Card {
-        margin-left: 22vw;
-        margin-right: 22vw;
         margin-top: 80px;
+        width: 55vw;
+    }
+    .Information {
+        text-align: left;
+        padding-left: 15vw;
     }
 }
 
 @media (min-width: 1000px) {
     .Card {
-        margin-left: 35vw;
-        margin-right: 35vw;
+        width: 30vw;
+        padding: 2vw;
+    }
+    .Information {
         padding-left: 5vw;
-        padding-right: 5vw;
+    }
+}
+
+@media (min-width: 1600px) {
+    .Card {
+        width: 18vw;
+    }
+    .Information {
+        padding-left: 3vw;
     }
 }

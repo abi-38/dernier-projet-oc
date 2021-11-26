@@ -1,18 +1,15 @@
-import React from 'react';
-import {useState} from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState } from 'react';
 import Button from '../../../UI/button/Button'
 import '../../../UI/button/Button.scss';
 import '../Sign.scss';
 import {POST} from '../../../../assets/api/confAxios';
 import Card from '../../../UI/card/Card';
-import {
-  Link
-} from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
+import AuthContext from '../../../../context/Auth-context';
 
-// ajouter confirmation de mdp
 const SignUp = () => {
     // déclarer les hook en 1er
+    const ctx = useContext(AuthContext);
     const history = useHistory();
 
     const [formIsValid, setFormIsValid] = useState ( false );
@@ -27,6 +24,10 @@ const SignUp = () => {
     //const [passwordConfirmationValue, setPasswordConfirmationValue] = useState ( "" );
     //const [passwordConfirmationIsValid, setPasswordConfirmationIsValid] = useState ( null );
     const [error, setError] = useState(null);
+
+    if(ctx.isLogin()) {
+      return <Redirect push to="/home" />
+    }
 
     const nameChangeHandler = (event) => {
       setNameValue(event.target.value) 

@@ -8,6 +8,8 @@
     width: 100vw;
     height: 900px;
     overflow-y: hidden !important;
+    display: flex;
+    justify-content: center;
     .Identification > form > textarea {
         width: 69vw;
     }
@@ -20,6 +22,7 @@
         right: 0px;
         top: 790px;
         width: 100vw;
+        height: auto;
         overflow-y: hidden !important;
         ul {
             padding-left: 0px;
@@ -46,7 +49,6 @@
             }
             .DivPhoto {
                 overflow: hidden;
-                margin-left: -20vw;
                 width: 112vw;
                 .ImgPost {
                     width: 90vw;
@@ -77,7 +79,6 @@
     }
     .PostStyle__Posts li > .Card .DivPhoto {
         overflow: hidden;
-        margin-left: -9vw;
         width: 56vw;
         img.ImgPost {
             width: 57vw;
@@ -88,23 +89,22 @@
 @media (min-width: 998px) {
     .PostStyle__Posts li > .Card .DivProfil {
         overflow: hidden;
-        width: 20vw;
-        height: 20vw;
-        border-radius: 20vw;
+        width: 15vw;
+        height: 15vw;
+        border-radius: 15vw;
         display: flex;
         align-items: center;
         justify-content: center;
         background-size: cover;
         img.ImgProfil {
-            width: 40vw;
+            width: 18vw;
         }
     }
     .PostStyle__Posts li > .Card .DivPhoto {
         overflow: hidden;
-        margin-left: -5vw;
-        width: 30vw;
+        width: 18vw;
         img.ImgPost {
-            width: 30vw;
+            width: 18vw;
         }
     }
 }
