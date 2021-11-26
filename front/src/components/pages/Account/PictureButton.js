@@ -1,4 +1,3 @@
-import React from 'react';
 import {useState} from 'react';
 import Button from '../../UI/button/Button';
 import '../../UI/button/Button.scss';
@@ -8,8 +7,6 @@ const PictureButton = (props) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);
-
-    const [error, setError] = useState(null);
 
     const handlerChangePictureInput = (e) => {
         e.preventDefault();

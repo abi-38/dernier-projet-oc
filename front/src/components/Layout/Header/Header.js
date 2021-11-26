@@ -1,4 +1,3 @@
-import React from 'react';
 import logo from '../../../assets/img/Logo.png'
 import './Header.scss';
 import DropDownList from '../Nav/DropDownList';

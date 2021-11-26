@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext({
     token: null,
@@ -10,7 +9,6 @@ const AuthContext = React.createContext({
 
 export const AuthContextPorvider = (props) => {
     const [token, setToken] = useState(null);
-    const history = useHistory();
 
     useEffect( () => {
         const storedToken = localStorage.hasOwnProperty('token') ? localStorage.getItem('token') : null;

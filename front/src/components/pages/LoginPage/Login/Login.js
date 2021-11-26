@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import '../../../UI/input/Input.scss';
-import '../Sign.scss';
-import Button from '../../../UI/button/Button';
-import '../../../UI/button/Button.scss';
-import { POST } from '../../../../assets/api/confAxios';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
+import { POST } from '../../../../assets/api/confAxios';
+import Button from '../../../UI/button/Button';
 import Card from '../../../UI/card/Card';
 import AuthContext from '../../../../context/Auth-context';
+import '../../../UI/input/Input.scss';
+import '../../../UI/button/Button.scss';
+import '../Sign.scss';
 
 const Login = () => { 
     // déclarer les hook en 1er
@@ -20,53 +20,43 @@ const Login = () => {
     const [error, setError] = useState(null);
     const [formIsValid, setFormIsValid] = useState ( false );
 
-    if(ctx.isLogin()) {
-        return <Redirect push to="/home" />
-    }
+    useEffect(() => {
+        setError(false);
+        setFormIsValid(null);
 
-    /*useEffect(() => {
         const identifier = setTimeout(() => {
-            console.warn('validity')
             setFormIsValid(
-                emailState.isValid && passwordState.isValid
-            )
+                emailIsValid && passwordIsValid
+            );
         }, 500)
 
         return () => {
             console.log('CLEANUP')
             clearTimeout(identifier);
+            setError('Cet email ou mot de passe ne correspond à aucun compte.');
         }
-    }, [emailState.isValid, passwordState.isValid])*/
+    }, [emailIsValid, passwordIsValid])
+
+    if(ctx.isLogin()) {
+        return <Redirect push to="/home" />
+    }
 
     const emailChangeHandler = (event) => {
-        /*const action = {
-            type: 'USER_INPUT',
-            val: event.target.value
-        }
-        dispatchEmail(action) // dispatchEmail à définir*/
-
         setEmailValue(event.target.value) 
     };
 
     const passwordChangeHandler = (event) => {
-        /*const action = {
-            type: 'USER_INPUT',
-            val: event.target.value
-        }
-        dispatchPassword(action) // dispatchPassword à définir*/
-
         setPasswordValue(event.target.value)
     };
 
     const validateEmailHandler = () => {
         setEmailIsValid(emailValue.includes('@'));
-        setFormIsValid(emailValue.includes('@') && passwordValue.length > 6);
     }
 
     const validatePasswordHandler = () => {
-        setPasswordIsValid(passwordValue.length > 6);
-        setFormIsValid(passwordValue.length > 6 && emailValue.includes('@'));
+        setPasswordIsValid(passwordValue.length >= 6);
     }   
+
     const handlerSubmit = async (event) => {
         event.preventDefault();
         setError(null);
@@ -91,7 +81,7 @@ const Login = () => {
                 <Card>
                     <h1 className='h1'>Identifiez-vous</h1>
                     {error && <div>{error}</div>}
-                    <form onSubmit={handlerSubmit}>
+                    <form onSubmit={handlerSubmit} isValid={formIsValid}>
                         <div className="Input">
                             <label for="email">E-mail :</label>
                             <input
