@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import CreatePost from './Posts/CreatePost';
 import Posts from './Posts/Posts';
 // fonction de rappel à passer au composant NewPost
-import AuthContext from '../../../hooks/Auth-context';
+import AuthContext from '../../../context/Auth-context';
 import { Redirect } from "react-router-dom";
 
 const Home = () => {

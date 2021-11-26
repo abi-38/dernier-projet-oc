@@ -1,37 +1,28 @@
 import React, { useContext, useState } from 'react';
-//import {useEffect} from 'react';
 import '../../../UI/input/Input.scss';
-//import SignInList from '../../../../assets/Listes/SignInList';
 import '../Sign.scss';
 import Button from '../../../UI/button/Button';
 import '../../../UI/button/Button.scss';
 import { POST } from '../../../../assets/api/confAxios';
 import { Link, useHistory, Redirect } from "react-router-dom";
 import Card from '../../../UI/card/Card';
-import AuthContext from '../../../../hooks/Auth-context';
+import AuthContext from '../../../../context/Auth-context';
 
 const Login = () => { 
     // déclarer les hook en 1er
     const ctx = useContext(AuthContext);
     const history = useHistory();
     
-    //const navigate = useNavigate();
     const [emailValue, setEmailValue] = useState ( "" );
     const [emailIsValid, setEmailIsValid] = useState ( null );
     const [passwordValue, setPasswordValue] = useState ( "" );
     const [passwordIsValid, setPasswordIsValid] = useState ( null );
     const [error, setError] = useState(null);
-    //const [isLoaded, setIsLoaded] = useState(false);
     const [formIsValid, setFormIsValid] = useState ( false );
 
     if(ctx.isLogin()) {
         return <Redirect push to="/home" />
     }
-
-    //const [emailState, dispatchEmail] = useReducer ( {value: "", isValid: null} );
-    //const [passwordState, dispatchPassword] = useReducer ( {value: "", isValid: null} );
-
-    //const authCtx = useContext(AuthContext); //AuthContext à définir
 
     /*useEffect(() => {
         const identifier = setTimeout(() => {
@@ -79,6 +70,7 @@ const Login = () => {
     const handlerSubmit = async (event) => {
         event.preventDefault();
         setError(null);
+
         try {
             const response = await POST( '/api/auth/login', {
                 email: emailValue,
@@ -105,7 +97,7 @@ const Login = () => {
                             <input
                                 id="email"
                                 label="Email"
-                                //isValid={emailIsValid}
+                                isValid={emailIsValid}
                                 type="email"
                                 value={emailValue}
                                 onChange={emailChangeHandler}
@@ -117,15 +109,14 @@ const Login = () => {
                             <input
                                 id="password"
                                 label="Mot de passe"
-                                //isValid={passwordIsValid}
+                                isValid={passwordIsValid}
                                 type="password"
                                 value={passwordValue}
                                 onChange={passwordChangeHandler}
                                 onBlur={validatePasswordHandler}
-                                //ref={passwordInputRef} -> pas besoin à utiliser pour composant générique - cas spécifique
                             />
                         </div>
-                        <Button type="submit" /*disabled={!formIsValid}*/ text='Se connecter' />
+                        <Button type="submit" disabled={!formIsValid} text='Se connecter' />
                     </form>
                 </Card>
             <p className='Information'>Vous n'avez pas de compte ? <Link to="/sinscrire">Inscrivez-vous !</Link></p>

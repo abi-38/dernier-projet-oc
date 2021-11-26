@@ -7,8 +7,8 @@ import {
     Route,
 } from "react-router-dom";
 import Nav from './nav';
-import { GuardProvider, GuardedRoute } from 'react-router-guards';
-import { AuthContextPorvider } from '../../../hooks/Auth-context';
+//import { GuardProvider, GuardedRoute } from 'react-router-guards';
+import { AuthContextPorvider } from '../../../context/Auth-context';
 
 /*<GuardProvider guards={[requireLogin]} loading={Loading} error={NotFound}>...</GuardProvider>
 <GuardedRoute path="/" exact component={Home} meta={{ auth: true }} />

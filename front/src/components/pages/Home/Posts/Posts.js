@@ -10,6 +10,8 @@ const Posts = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setPosts] = useState([]);
+    //const [formIsValid, setFormIsValid] = useState ( false );
+
 
     useEffect(() => {
         const loadPosts = async () => {
@@ -18,6 +20,7 @@ const Posts = () => {
             if (response.status === 200) { //Base sur le code de status du retour de l'api
                 setPosts(data);
                 console.log('Chargement des posts réussis !');
+                console.log(data);
             } else {
                 setError('Une erreur a été rencontré lors de la récupération des post'); //Ou message d'erreur provenant de l'api
             }
@@ -27,16 +30,22 @@ const Posts = () => {
         loadPosts();
     }, [])
 
-    const submitHandler = async (formData) => {
+    const handlerCreatePost = async (formData) => {
         try {
-        const response = await POST( '/api/post', formData)
-        console.log('Post bien créé !');
-        const {data} = response; 
-        setPosts(posts.pop( data ));
-        //cleanForm()
+            const response = await POST( '/api/post', formData)
+            //console.log('Post bien créé !');
+            const {data} = response; 
+            console.log(data);
+            setPosts(previousPosts => [
+                data,
+                ...previousPosts
+             ])
+            //setFormIsValid(true);
         } catch (e) {
-            console.log(error);
-            setError(e.response.data.error);
+            //setFormIsValid(false);
+            //setError(e.response.data.error);
+            setError(e);
+            //console.log(posts);
         }
 	};
 
@@ -53,10 +62,10 @@ const Posts = () => {
     return (
         <>
         <div className='PostStyle'>
-            <CreatePost onSubmit={submitHandler}/>
+            <CreatePost onAddPostHandler={handlerCreatePost}/>
         </div>
         <div className='PostStyle PostStyle__Posts'>
-            {error && <div>{error}</div>}
+            
             <ul>
                 {posts.map(post => {
                     return <Post post={post} onClick={handlerDeletePostButton} />;

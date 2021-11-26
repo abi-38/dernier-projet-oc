@@ -5,7 +5,7 @@ import '../Sign.scss';
 import {POST} from '../../../../assets/api/confAxios';
 import Card from '../../../UI/card/Card';
 import { Link, useHistory, Redirect } from "react-router-dom";
-import AuthContext from '../../../../hooks/Auth-context';
+import AuthContext from '../../../../context/Auth-context';
 
 const SignUp = () => {
     // déclarer les hook en 1er

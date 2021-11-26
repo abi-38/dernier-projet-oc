@@ -20,9 +20,11 @@ exports.createPost = (req, res, next) => {
     } : { 
       ...req.body,
     };
-  Post.create(postObject)
+  Post.create(postObject, {include: [{model: User, as: 'user'}]})
   .then((post) => {
-    post.setUser(req.user);     
+    post.setUser(req.user, req.user.dataValues.name, req.user.dataValues.imageUrl);     
+    //post.setUser(req.user.dataValues.name); 
+    //post.setUser(req.user.dataValues.imageUrl); 
     return res.status(201).json(post); 
   })
   .catch((err) => {

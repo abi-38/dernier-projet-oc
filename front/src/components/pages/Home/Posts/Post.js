@@ -12,10 +12,10 @@ const Post = (props) => {
     return <li key={post.id} className="Post">
         <Card className='Card'>
             <div>
-                {post.user.name}
+                {post.userId && post.user.name}
             </div>
             <div className='DivProfil'>
-                <img src={post.user.imageUrl} className="ImgProfil" alt='photoPost' />
+                <img src={post.userId && post.user.imageUrl} className="ImgProfil" alt='photoPost' />
             </div>
             <div className="DatePost">                    
                 <p>Publié le : </p><DayJS format="DD-MM-YYYY" date={post.createdAt}/>

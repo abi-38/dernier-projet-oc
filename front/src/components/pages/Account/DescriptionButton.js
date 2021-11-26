@@ -5,34 +5,32 @@ import '../../UI/button/Button.scss';
 import '../../Layout/Header/Header.scss';
 import '../../pages/Home/Posts/PostStyle.scss';
 import '../Account/Account.scss';
-import {PUT} from '../../../assets/api/confAxios';
 
 const DescriptionButton = (props) => {
-    const [descriptionValue, setDescriptionValue] = useState ( "" );
+    const {onAddPostHandler} = props;
 
+    const [descriptionValue, setDescriptionValue] = useState ( "" );
     const [error, setError] = useState(null);
 
     const handlerChangeDescriptionInput = (event) => {
         setDescriptionValue(event.target.value) 
-    };    
+    };
+    
+    //const handlerChangeDescriptionInput = (props) => {
+        //const {event, setDescriptionValue} = props;
+        //setDescriptionValue(event.target.value) 
+    //};    
 
-    const handlerChangeDecriptionButton = async (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
-
-        const response = await PUT( '/api/auth/' + props.userId, {
-            description: descriptionValue,
-        })
-        if(response.status === 201 ) {
-            console.log('User bien modifié !');
-            setError(false)
-        } else {
-            console.log(error);
-            setError(true)
-        }
+        
+        onAddPostHandler(descriptionValue);
+        //emptyInput(setDescriptionValue);
+        
     }
     
     return (
-        <form onSubmit={handlerChangeDecriptionButton}> 
+        <form onSubmit={submitHandler}> 
             <div className='Input'>
                 <label className='h1__h2' for="description">Votre nouvelle description</label>
                 <textarea 
