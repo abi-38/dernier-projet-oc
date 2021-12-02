@@ -18,7 +18,7 @@ exports.createPost = (req, res, next) => {
       ...req.body, 
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { 
-      ...req.body,
+      ...req.body
     };
   Post.create(postObject, {include: [{
     model: User, attributes: 
@@ -29,7 +29,6 @@ exports.createPost = (req, res, next) => {
   //  {include: [{model: User, as: 'user'}]}
   .then((post) => {
     post.setUser(req.user);     
-    console.log(req.user)
     //post.setUser(req.user.dataValues.name); 
     //post.setUser(req.user.dataValues.imageUrl); 
     return res.status(201).json(post); 

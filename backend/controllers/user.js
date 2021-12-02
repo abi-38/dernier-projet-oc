@@ -3,19 +3,14 @@ const db = require("../models");
 const User = db.user;
 const Op = db.sequelize.Op; 
 const jwt = require('jsonwebtoken'); 
-
-// penser à créer le updateSignup ou updateProfil
-// changement de la description, de la photo, du mdp ou du nom
-// impossible de changer l'email !!!
-
-// mettre en place la suppression de compte
+const { user } = require('../models');
 
 exports.signup = (req, res, next) => {
     // regex pour vérifier la cohérence de l'email
     const emailReg = new RegExp(/^[\w\-]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/); 
     const validEmail = emailReg.test(req.body.email);
-    const mdpReg = new RegExp(/^[\w\-]{6,}$/);
     // regex pour vérifier la cohérence du mdp
+    const mdpReg = new RegExp(/^[\w\-]{6,}$/);
     const validMdp = mdpReg.test(req.body.password); 
     if(validEmail && validMdp) {
         bcrypt.hash(req.body.password, 10)
@@ -78,8 +73,8 @@ exports.login = (req, res, next) => {
                         userEmail: user.email,
                         userId: user.id
                     }
-                },
-                    process.env.TOKEN, // RANDOM_TOKEN_SECRET - pahdtcps521199cjneyslfh1545sljfsss1145
+                    },
+                    process.env.TOKEN, // RANDOM_TOKEN_SECRET
                     { expiresIn: '6 hours' } 
                 )
             });
@@ -95,7 +90,6 @@ exports.login = (req, res, next) => {
 exports.getUser = (req, res, next) => {
     User.findByPk( req.user.dataValues.id) // findByPk à utiliser QUE pour récupérer un id
     .then((user) => {
-    console.log(req.user)
 
     if(user === null) {
     res.status(400).json({
@@ -109,7 +103,15 @@ exports.getUser = (req, res, next) => {
 }
 
 exports.deleteUser = (req, res, next) => {
-    // ici vérifier l'id token correspond au front
+    const token = req.headers.authorization.split(' ')[1]; 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
+    const userId = decodedToken.data.userId;
+    if (req.params.id != userId) {
+        res.status(400).json({
+            message: "Erreur d'authentification !"
+          });
+        return;
+    }
     User.findByPk( req.params.id )
     .then(user => {
         if(req.file) {
@@ -126,8 +128,9 @@ exports.deleteUser = (req, res, next) => {
             }
             })
             .catch((err) => {
-            return res.status(500).json({
-                message: `Error deleting User with id=${id}`
+                console.log('toto')
+                return res.status(500).json({
+                    message: `Error deleting User with id=${id}`
             });
             });
         });
@@ -143,13 +146,17 @@ exports.deleteUser = (req, res, next) => {
             }
         })
         .catch((err) => {
+            console.log('titi')
             return res.status(500).json({
             message: `Error deleting User with id=${id}`
             });
         });
         }
     })
-    .catch(error => res.status(500).json({  message: "Le user n'existe pas"  }));
+    .catch((error) => {
+        console.log('tata')
+        return res.status(500).json({  message: "Le user n'existe pas"  })
+    });
 }
 
 exports.updateUser = (req, res, next) => {
@@ -176,12 +183,32 @@ exports.updateUser = (req, res, next) => {
     });
 };
 
+/*
 exports.updatePasswordUser = (req, res, next) => {
+    //vérif de l'id de l'utilisateur
+    const token = req.headers.authorization.split(' ')[1]; 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
+    const userId = decodedToken.data.userId;
+    
     const id = req.params.id;
-    console.warn(id);
+
+
+    if (id != userId) {
+        res.status(400).json({
+            message: "Erreur d'authentification !"
+          });
+        return;
+    }
+    // vérifier l'ancien mdp avant de le modifier
+    if (req.body.password != User.password) {
+        res.status(400).json({
+            message: "Le mot de passe actuel ne correspond pas !"
+          });
+        return;
+    }
+
     const mdpReg = new RegExp(/^[\w\-]{6,}$/);
     const validMdp = mdpReg.test(req.body.password); 
-    console.warn(validMdp);
 
     if(validMdp) {
         bcrypt.hash(req.body.password, 10)
@@ -207,4 +234,4 @@ exports.updatePasswordUser = (req, res, next) => {
     } else {
         return res.status(400).json({ error: 'Email ou mot de passe non valide !' })
     }
-};
+};*/

@@ -24,6 +24,7 @@ export const AuthContextPorvider = (props) => {
 
     const loginHandler = (token) => {
         setToken(token.token); 
+        console.log(token);
         localStorage.setItem('token', token.token);
     }
 

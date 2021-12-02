@@ -85,23 +85,21 @@ const Account = () => {
     
     return (
         <div className='PostStyle PostStyle__Account'>
-        <Card className='Card'>
+        <Card className='Card Card__Account'>
             {error && <div>{error}</div>}
             <h1 className='h1'>{user.name}</h1>
             <div className='DivProfilAccount'>
                 <img src={picture} className="ImgProfil" alt='photoPost' />                
             </div>
             <PictureButton onChangePictureHandler={handlerChangePicture} />           
-            <div>
+            <div className="accountDiv">
                 <h2 className='h1__h2Account'>Email</h2>
                 <p>{user.email}</p>
             </div>
-            <div>
+            <div className="accountDiv">
                 <h2 className='h1__h2Account'>Description</h2>
                 <p>{description}</p>
                 <DescriptionButton onAddPostHandler={handlerChangeDescription} />
-            </div>
-            <div>
                 <Button onClick={handlerDeleteAccount} className='Bouton-link' text="Supprimer son compte" />
             </div>
         </Card>

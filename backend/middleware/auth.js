@@ -20,8 +20,6 @@ module.exports = async (req, res, next) => {
     }
     catch(error) {
         console.log(error)
-        console.warn('toto')
-
         return res.status(401).json({ error: error | 'Utilisateur non authentifié !' })
     }
 };

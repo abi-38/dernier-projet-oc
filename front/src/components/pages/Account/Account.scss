@@ -1,13 +1,38 @@
 .DivProfilAccount {
     overflow: hidden;
-    width: 20vw;
-    height: 20vw;
-    border-radius: 20vw;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 40vw;
     display: flex;
     align-items: center;
     justify-content: center;
     background-size: cover;
+    text-align: center;
     .ImgProfil {
-        width: 20vw;
+        width: 40vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .DivProfilAccount {
+        overflow: hidden;
+        width: 30vw;
+        height: 30vw;
+        border-radius: 30vw;
+        .ImgProfil {
+            width: 30vw;
+        }
+    }
+}
+
+@media (min-width: 998px) {
+    .DivProfilAccount {
+        overflow: hidden;
+        width: 18vw;
+        height: 18vw;
+        border-radius: 18vw;
+        .ImgProfil {
+            width: 18vw;
+        }
     }
 }

@@ -16,6 +16,9 @@
     &__GreyButton {
         background-color: grey !important;
     }
+    &:disabled {
+        background-color: grey;
+    }
 }
 
 @media (min-width: 760px) {

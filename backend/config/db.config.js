@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); // cache les liens sensibles d'accès à la bdd
 
 module.exports = {
   HOST: process.env.DB_HOST,

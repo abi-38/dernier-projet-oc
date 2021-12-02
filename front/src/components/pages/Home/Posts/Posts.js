@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { GET, POST, DELETE } from '../../../../assets/api/confAxios';
 import CreatePost from './CreatePost';
 import Post from './Post';
@@ -11,9 +10,9 @@ const Posts = () => {
 
     useEffect(() => {
         const loadPosts = async () => {
-            const response =  await GET('/api/post');
-            const data = response.data;
             try { 
+                const response =  await GET('/api/post');
+                const data = response.data;
                 setPosts(data);
                 console.log('Chargement des posts réussis !');
                 console.log(data);

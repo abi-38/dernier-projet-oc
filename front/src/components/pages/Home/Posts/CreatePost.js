@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Button from '../../../UI/button/Button';
+import Card from "../../../UI/card/Card";
 import '../../../UI/button/Button.scss';
 import '../../../Layout/Header/Header.scss';
 import './PostStyle.scss';
-import Card from "../../../UI/card/Card";
 
 const CreatePost = (props) => {
     const {onAddPostHandler} = props;
@@ -75,7 +75,7 @@ const CreatePost = (props) => {
         
         <Card className='Card'>
             <h1 className='h1' >Derniers Post</h1>
-            <form onSubmit={submitHandler} isValid={formIsValid}> 
+            <form onSubmit={submitHandler} isValid={formIsValid} className="Home"> 
                 <div className='Input'>
                     <label className='h1__h2' for="description">Exprimez-vous</label>
                     <textarea 
@@ -113,7 +113,9 @@ const CreatePost = (props) => {
                         )
                     }
                 </div>
-				<Button type='submit' text="Publier" />
+                <div className="publishButton">
+				    <Button type='submit' text="Publier" />
+                </div>
             </form>
             
         </Card>

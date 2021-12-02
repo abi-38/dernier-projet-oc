@@ -1,26 +1,30 @@
 import React, { useContext, useState } from 'react';
+import { Link, useHistory, Redirect } from "react-router-dom";
+import { POST } from '../../../../assets/api/confAxios';
 import Button from '../../../UI/button/Button'
+import Card from '../../../UI/card/Card';
+import AuthContext from '../../../../context/Auth-context';
 import '../../../UI/button/Button.scss';
 import '../Sign.scss';
-import {POST} from '../../../../assets/api/confAxios';
-import Card from '../../../UI/card/Card';
-import { Link, useHistory, Redirect } from "react-router-dom";
-import AuthContext from '../../../../context/Auth-context';
 
 const SignUp = () => {
-    // déclarer les hook en 1er
     const ctx = useContext(AuthContext);
     const history = useHistory();
 
     const [formIsValid, setFormIsValid] = useState ( false );
+
     const [nameValue, setNameValue] = useState ( "" );
     const [nameIsValid, setNameIsValid] = useState ( null );
+
     const [emailValue, setEmailValue] = useState ( "" );
     const [emailIsValid, setEmailIsValid] = useState ( null );
+
     const [passwordValue, setPasswordValue] = useState ( "" );
     const [passwordIsValid, setPasswordIsValid] = useState ( null );
+
     const [passwordConfirmationValue, setPasswordConfirmationValue] = useState ( "" );
     const [passwordConfirmationIsValid, setPasswordConfirmationIsValid] = useState ( null );
+    
     const [error, setError] = useState(null);
 
     if(ctx.isLogin()) {
@@ -45,22 +49,22 @@ const SignUp = () => {
 
     const validateNameHandler = () => {
       setNameIsValid(nameValue.length > 3);
-      setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length > 6);
+      setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length >= 6);
     }
 
     const validateEmailHandler = () => {
         setEmailIsValid(emailValue.includes('@'));
-        setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length > 6);
+        setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length >= 6);
     }
 
     const validatePasswordHandler = () => {
-        setPasswordIsValid(passwordValue.length > 6);
-        setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length > 6);
+        setPasswordIsValid(passwordValue.length >= 6);
+        setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length >= 6);
     }
 
     const validatePasswordConfirmationHandler = () => {
       setPasswordConfirmationIsValid(passwordConfirmationValue.length === passwordValue);
-      setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length > 6 && passwordConfirmationValue.length === passwordValue);
+      setFormIsValid(nameValue.length > 3 && emailValue.includes('@') && passwordValue.length >= 6 && passwordConfirmationValue.length === passwordValue);
     }
 
     const submitHandler = async (event) => {
