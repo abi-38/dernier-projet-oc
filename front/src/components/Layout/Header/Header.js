@@ -1,7 +1,6 @@
-import React from 'react';
+import DropDownList from '../Nav/DropDownList';
 import logo from '../../../assets/img/Logo.png'
 import './Header.scss';
-import DropDownList from '../Nav/DropDownList';
 import '../Nav/DropDownList.scss';
 
 const Header = () => {

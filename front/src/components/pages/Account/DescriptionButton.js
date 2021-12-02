@@ -1,4 +1,3 @@
-import React from 'react';
 import {useState} from 'react';
 import Button from '../../UI/button/Button';
 import '../../UI/button/Button.scss';
@@ -10,24 +9,23 @@ const DescriptionButton = (props) => {
     const {onAddPostHandler} = props;
 
     const [descriptionValue, setDescriptionValue] = useState ( "" );
-    const [error, setError] = useState(null);
 
     const handlerChangeDescriptionInput = (event) => {
         setDescriptionValue(event.target.value) 
     };
+
     
-    //const handlerChangeDescriptionInput = (props) => {
-        //const {event, setDescriptionValue} = props;
-        //setDescriptionValue(event.target.value) 
-    //};    
+
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        
         onAddPostHandler(descriptionValue);
-        //emptyInput(setDescriptionValue);
-        
+        setDescriptionValue(" ") // ne fonctionne pas... 
+        console.log(descriptionValue);
+
+
     }
+
     
     return (
         <form onSubmit={submitHandler}> 
@@ -43,7 +41,7 @@ const DescriptionButton = (props) => {
             >
             </textarea>
             </div>
-            <Button type='submit' className='Bouton-link__GreyButton' text="Changer sa description" />
+            <Button type='submit' className='Bouton-link__GreyButton Bouton-link__SmallMarge' text="Changer sa description" />
         </form>
     )
 }

@@ -30,9 +30,5 @@ db.post.belongsTo(db.user, {
   foreignKey: "userId",
   as: "user",
 });
-/*
-db.post.belongsTo(db.user, {
-  foreignKey: "imageUrl"
-});*/
 
 module.exports = db;

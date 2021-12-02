@@ -1,4 +1,3 @@
-import React from 'react';
 import { MDBDropdown } from 'mdb-react-ui-kit';
 import MenuLogin from '../../../assets/Listes/MenuLogin';
 import {

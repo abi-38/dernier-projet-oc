@@ -15,14 +15,21 @@
   margin-bottom: 30px;
   padding-top: 30px;
   padding-bottom: 20px;
+  text-align: center;
   font-size: 1.8rem !important;
   &__h2 {
     font-size: 1rem;
     padding-left: 2vw;
-    text-align: center;
+    width: 85vw;
   }
   &__h2Account {
     font-size: 1.3rem;
     color: $color-tertiaire;
+  }
+}
+
+@media (min-width: 760px) {
+  .h1__h2 {
+      width: auto;
   }
 }

@@ -7,7 +7,7 @@
     top: 50px;
     width: 100vw;
     height: 900px;
-    overflow-y: hidden !important;
+    overflow-x: hidden !important;
     display: flex;
     justify-content: center;
     .Identification > form > textarea {
@@ -15,6 +15,9 @@
     }
     &__Account {
         height: auto;
+        div.accountDiv {
+            width: 65vw;
+        }
     }
     &__Posts {
         background-color: $color-secondary;
@@ -31,15 +34,15 @@
         li > .Card {
             .DivProfil {
                 overflow: hidden;
-                width: 72vw;
-                height: 72vw;
-                border-radius: 72vw;
+                width: 40vw;
+                height: 40vw;
+                border-radius: 40vw;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background-size: cover;
                 .ImgProfil {
-                    width: 153vw;
+                    width: 40vw;
                 }
             }
             .DatePost {
@@ -49,7 +52,7 @@
             }
             .DivPhoto {
                 overflow: hidden;
-                width: 112vw;
+                width: 90vw;
                 .ImgPost {
                     width: 90vw;
                 }
@@ -64,47 +67,57 @@
 }
 
 @media (min-width: 768px) {
-    .PostStyle__Posts li > .Card .DivProfil {
+    .PostStyle {
+        &__Account div.accountDiv {
+            width: 41vw;
+        }
+        &__Posts li > .Card .DivProfil {
         overflow: hidden;
-        width: 40vw;
-        height: 40vw;
-        border-radius: 40vw;
+        width: 30vw;
+        height: 30vw;
+        border-radius: 30vw;
         display: flex;
         align-items: center;
         justify-content: center;
         background-size: cover;
         img.ImgProfil {
-            width: 72vw;
+            width: 30vw;
+        }
         }
     }
     .PostStyle__Posts li > .Card .DivPhoto {
         overflow: hidden;
-        width: 56vw;
+        width: 55vw;
         img.ImgPost {
-            width: 57vw;
+            width: 55vw;
         }
     }
 }
 
 @media (min-width: 998px) {
-    .PostStyle__Posts li > .Card .DivProfil {
-        overflow: hidden;
-        width: 15vw;
-        height: 15vw;
-        border-radius: 15vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-size: cover;
-        img.ImgProfil {
-            width: 18vw;
+    .PostStyle {
+        &__Account div.accountDiv {
+            width: 24vw;
+        }
+        &__Posts li > .Card .DivProfil {
+            overflow: hidden;
+            width: 15vw;
+            height: 15vw;
+            border-radius: 15vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            img.ImgProfil {
+                width: 18vw;
+            }
         }
     }
     .PostStyle__Posts li > .Card .DivPhoto {
         overflow: hidden;
-        width: 18vw;
+        width: 30vw;
         img.ImgPost {
-            width: 18vw;
+            width: 30vw;
         }
     }
 }

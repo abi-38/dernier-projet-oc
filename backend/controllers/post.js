@@ -18,11 +18,17 @@ exports.createPost = (req, res, next) => {
       ...req.body, 
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { 
-      ...req.body,
+      ...req.body
     };
-  Post.create(postObject, {include: [{model: User, as: 'user'}]})
+  Post.create(postObject, {include: [{
+    model: User, attributes: 
+        ['name', 'imageUrl'],
+    as: 'user'
+    }]
+  })
+  //  {include: [{model: User, as: 'user'}]}
   .then((post) => {
-    post.setUser(req.user, req.user.dataValues.name, req.user.dataValues.imageUrl);     
+    post.setUser(req.user);     
     //post.setUser(req.user.dataValues.name); 
     //post.setUser(req.user.dataValues.imageUrl); 
     return res.status(201).json(post); 

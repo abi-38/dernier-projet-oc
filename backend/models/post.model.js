@@ -22,9 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         description: {
             type: Sequelize.STRING
-        }, // utiliser les validators custom 
-        //-> l'utlisateur doit remplir soit un titre soit une description
+        },
     });
-  
     return Post;
 };

@@ -7,7 +7,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 81vw;
+    width: 90vw;
+    > form.Home {
+        padding-left: 5vw;
+        > div.publishButton {
+            text-align: center;
+        }
+    }
+    &__Account {
+        height: 1250px;
+        margin-bottom: 50px;
+    }
 }
 .Information {
     font-size: 0.7rem;
@@ -18,6 +28,9 @@
     .Card {
         margin-top: 80px;
         width: 55vw;
+        > form.Home {
+            padding-left: 0vw;
+        }
     }
     .Information {
         text-align: left;

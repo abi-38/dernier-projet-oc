@@ -11,6 +11,16 @@ a.dropdown-toggle {
         display: none;
     }
 }
-li > a.dropdown-item > a {
+li > a.dropdown-item > a, li > a.dropdown-item > button {
     color: $color-primary !important;
+}
+
+a.dropdown-item > button {
+    background-color: white;
+    border: none;
+    padding-left: 0px;
+}
+
+a.dropdown-item > button:hover {
+    background-color: #eee;
 }
