@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer, useEffect, useContext } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
 import { POST } from '../../../../assets/api/confAxios';
 import Button from '../../../UI/button/Button';
@@ -7,33 +7,8 @@ import AuthContext from '../../../../context/Auth-context';
 import '../../../UI/input/Input.scss';
 import '../../../UI/button/Button.scss';
 import '../Sign.scss';
-
-const INITIAL_STATE = {
-    value: '',
-    isValid: null,
-    type_input: ''
-};
-
-const inputReducer = (state, action) => {
-    const passwordRegex = /^[\w\-]{6,}$/;
-    const emailRegex = /^[\w\-]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/;
-    switch (action.type) {
-        case 'USER_INPUT':
-            return {
-                value: action.val, 
-                isValid: action.type_input === 'email' ? 
-                    emailRegex.test(action.val) : 
-                    passwordRegex.test(action.val) 
-            };
-        case 'INPUT_BLUR':
-            return {
-                value: state.value, 
-                isValid: action.type_input === 'email' ? 
-                    emailRegex.test(state.value) : 
-                    passwordRegex.test(state.value) 
-            };
-    }
-}
+import inputReducer from '../../../../assets/useReducer/inputReducer';
+import INITIAL_STATE from '../../../../assets/useReducer/INITIAL_STATE';
 
 const Login = () => { 
     // déclarer les hook en 1er
@@ -73,7 +48,11 @@ const Login = () => {
     };
 
     const passwordChangeHandler = (event) => {
-        dispatchPassword({type: 'USER_INPUT', val: event.target.value, type_input: 'password'});
+        dispatchPassword({
+            type: 'USER_INPUT', 
+            val: event.target.value, 
+            type_input: 'password'
+        });
     };
 
     const validateEmailHandler = () => {
