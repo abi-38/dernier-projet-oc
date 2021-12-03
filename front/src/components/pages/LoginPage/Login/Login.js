@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect, useContext } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
-import { POST } from '../../../../assets/api/confAxios';
+import { GET, POST } from '../../../../assets/api/confAxios';
 import Button from '../../../UI/button/Button';
 import Card from '../../../UI/card/Card';
 import AuthContext from '../../../../context/Auth-context';
@@ -28,7 +28,10 @@ const Login = () => {
                 emailState.isValid && passwordState.isValid
             )
         }, 500)
+        // j'utilise un timeout pour éviter d'appliquer cette fonction à chaque caractères
+        // n'est pas obligatoire mais permet d'alléger - meilleure performance
         return () => {
+            // bien néttoyer la fonction après le timeOut
             console.log('CLEANUP')
             clearTimeout(identifier);
         }
@@ -75,6 +78,11 @@ const Login = () => {
             const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
             console.log('Utilisateur bien connécté !')
             ctx.onLogin(data);
+
+            const responseUser =  await GET('/api/auth/me'); 
+            const dataUser = responseUser.data;
+            ctx.saveAdmin(dataUser);
+
             history.push("/home");
         } catch (e) {
             setError(e.response.data.error);

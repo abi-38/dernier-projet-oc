@@ -5,7 +5,6 @@ import Post from './Post';
 
 const Posts = () => {
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -15,15 +14,13 @@ const Posts = () => {
                 const data = response.data;
                 setPosts(data);
                 console.log('Chargement des posts réussis !');
-                console.log(data);
+                
             } catch (e) {
                 setError(e.response.data.error); 
             }
             
         }
-        setIsLoaded(true)
         loadPosts();
-        console.log(isLoaded);
     }, [])
 
     const handlerCreatePost = async (formData) => {

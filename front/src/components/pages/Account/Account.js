@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import {GET, PUT, DELETE} from '../../../assets/api/confAxios';
+import { PUT, DELETE } from '../../../assets/api/confAxios';
 import { Redirect } from "react-router-dom";
 import Card from "../../UI/card/Card";
 import Button from '../../UI/button/Button';
@@ -15,12 +15,11 @@ const Account = () => {
     const ctx = useContext(AuthContext);
 
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [user, setUser] = useState({});
     const [picture, setPicture] = useState('');
     const [description, setDescription] = useState('');
 
-    useEffect(() => {
+    /*useEffect(() => {
         const loadUser = async () => {
             
             try { 
@@ -35,10 +34,24 @@ const Account = () => {
                 setError(e.response.data.error); 
             }
         }
-        setIsLoaded(true)
         loadUser();
-        setIsLoaded(false);
-    }, [])
+    }, [])*/
+
+    useEffect(() => {
+        const loadUser = async () => {
+            
+            try { 
+                setUser(ctx.user);
+                setPicture(ctx.user.imageUrl);
+                setDescription(ctx.user.description);
+                console.log("Chargement de l'utilisateur réussi !");
+                
+            } catch (e) {
+                setError({message : "une erreur est survenue !"}); 
+            }
+        }
+        loadUser();
+    }, [ctx.user])
 
     if(!ctx.isLogin()) {
         return <Redirect push to="/" />
@@ -87,6 +100,29 @@ const Account = () => {
         <div className='PostStyle PostStyle__Account'>
         <Card className='Card Card__Account'>
             {error && <div>{error}</div>}
+            <h1 className='h1'>{ctx.user.name}</h1>
+            <div className='DivProfilAccount'>
+                <img src={picture} className="ImgProfil" alt='photoPost' />                
+            </div>
+            <PictureButton onChangePictureHandler={handlerChangePicture} />           
+            <div className="accountDiv">
+                <h2 className='h1__h2Account'>Email</h2>
+                <p>{ctx.user.email}</p>
+            </div>
+            <div className="accountDiv">
+                <h2 className='h1__h2Account'>Description</h2>
+                <p>{description}</p>
+                <DescriptionButton onAddPostHandler={handlerChangeDescription} />
+                <Button onClick={handlerDeleteAccount} className='Bouton-link' text="Supprimer son compte" />
+            </div>
+        </Card>
+        </div>
+    )
+/*
+    return (
+        <div className='PostStyle PostStyle__Account'>
+        <Card className='Card Card__Account'>
+            {error && <div>{error}</div>}
             <h1 className='h1'>{user.name}</h1>
             <div className='DivProfilAccount'>
                 <img src={picture} className="ImgProfil" alt='photoPost' />                
@@ -104,7 +140,7 @@ const Account = () => {
             </div>
         </Card>
         </div>
-    )
+    )*/
 }
 
 export default Account;

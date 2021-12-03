@@ -33,7 +33,7 @@ const SignUp = () => {
         console.log('CLEANUP')
         clearTimeout(identifier);
     }
-  }, [nameState.isValid, emailState.isValid, passwordState.isValid, passwordConfirmationState.isValid])
+  }, [nameState.isValid, emailState.isValid, passwordState.isValid, passwordConfirmationState.isValid, passwordConfirmationState.value])
 
   if(ctx.isLogin()) {
     return <Redirect push to="/home" />
