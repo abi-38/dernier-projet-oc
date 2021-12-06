@@ -5,7 +5,7 @@ const Op = db.sequelize.Op;
 const fs = require('fs'); // pour les fichiers img
 const userModel = require("../models/user.model");
 
-/*
+
 exports.createPost = (req, res, next) => {
   //ici faire les console.log() -> regarder dans le terminal du back
   if(!req.body.title) {
@@ -37,9 +37,9 @@ exports.createPost = (req, res, next) => {
       
     });
   });
-};*/
+};
 
-
+/*
 exports.createPost = async (req, res, next) => {
   //ici faire les console.log() -> regarder dans le terminal du back
   if(!req.body.title) {
@@ -56,7 +56,7 @@ exports.createPost = async (req, res, next) => {
       },
       {
         include: [{
-          association: Post.user
+          association: Post.User
         }]
       });
     const postUpdated = await Post.findByPk(postCreated.id, {
@@ -67,10 +67,11 @@ exports.createPost = async (req, res, next) => {
         as: 'user'
       }]
     })
+    return postUpdated
   } catch (e) {
     return(res.status(500).json({message: e.message}))
   }
-};
+};*/
 
 exports.findAllPost = (req, res, next) => {
 

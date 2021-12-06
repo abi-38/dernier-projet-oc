@@ -27,7 +27,7 @@ const DescriptionButton = (props) => {
     return (
         <form onSubmit={submitHandler}> 
             <div className='Input'>
-                <label className='h1__h2' for="description">Votre nouvelle description</label>
+                <label className='h1__h2' htmlFor="description">Votre nouvelle description</label>
                 <textarea 
                 id="description" 
                 value={descriptionValue}

@@ -5,19 +5,14 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import Nav from './nav';
-//import { GuardProvider, GuardedRoute } from 'react-router-guards';
+import Nav from './nav'
 import { AuthContextPorvider } from '../../../context/Auth-context';
-
-/*<GuardProvider guards={[requireLogin]} loading={Loading} error={NotFound}>...</GuardProvider>
-<GuardedRoute path="/" exact component={Home} meta={{ auth: true }} />
-*/
 
 export default function DropDownList () {
   return (
-  <AuthContextPorvider>
+    <AuthContextPorvider>
       <Router>
-          <MDBDropdown>
+        <MDBDropdown>
             <Nav/>
             
             <Switch>
@@ -26,7 +21,7 @@ export default function DropDownList () {
                   {route.component}
                 </Route>)}
             </Switch>
-          </MDBDropdown>
+        </MDBDropdown>
       </Router>
     </AuthContextPorvider>
   );

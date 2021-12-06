@@ -13,7 +13,7 @@ const Post = (props) => {
         onClick(id);     
     }
 
-    return <li key={post.id} className="Post">
+    return <li className="Post">
         <Card className='Card'>
             <div>
                 {post.userId && post.user.name}

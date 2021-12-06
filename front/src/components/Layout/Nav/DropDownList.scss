@@ -11,16 +11,17 @@ a.dropdown-toggle {
         display: none;
     }
 }
-li > a.dropdown-item > a, li > a.dropdown-item > button {
+li > button > a, li > a.dropdown-item > button {
     color: $color-primary !important;
 }
 
+li > button > a:hover {
+    cursor: pointer;
+}
+
 a.dropdown-item > button {
-    background-color: white;
+    background-color: transparent;
     border: none;
     padding-left: 0px;
 }
 
-a.dropdown-item > button:hover {
-    background-color: #eee;
-}

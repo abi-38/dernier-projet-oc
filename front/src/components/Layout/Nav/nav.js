@@ -1,8 +1,8 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBDropdownLink } from 'mdb-react-ui-kit';
-import {Link} from "react-router-dom";
 import { useContext } from 'react';
+import { Link } from "react-router-dom";
 import AuthContext from '../../../context/Auth-context';
 
 const Nav = () => {  
@@ -16,19 +16,19 @@ const Nav = () => {
             <MDBDropdownMenu>
                 {!ctx.isLogin() && 
                 <MDBDropdownItem>
-                    <MDBDropdownLink><Link to="/">Se connecter</Link></MDBDropdownLink>
+                    <MDBDropdownLink tag='button' type='button'><Link to="/">Se connecter</Link></MDBDropdownLink>
                 </MDBDropdownItem>}
                 {!ctx.isLogin() &&
                 <MDBDropdownItem>
-                    <MDBDropdownLink><Link to="/sinscrire">S'inscrire</Link></MDBDropdownLink>
+                    <MDBDropdownLink tag='button' type='button'><Link to="/sinscrire">S'inscrire</Link></MDBDropdownLink>
                 </MDBDropdownItem>}
                 {ctx.isLogin() &&
                 <MDBDropdownItem>
-                    <MDBDropdownLink><Link to="/home">Home</Link></MDBDropdownLink>
+                    <MDBDropdownLink tag='button' type='button'><Link to="/home">Home</Link></MDBDropdownLink>
                 </MDBDropdownItem>}
                 {ctx.isLogin() &&
                 <MDBDropdownItem>
-                    <MDBDropdownLink><Link to="/account">Mon compte</Link></MDBDropdownLink>
+                    <MDBDropdownLink tag='button' type='button'><Link to="/account">Mon compte</Link></MDBDropdownLink>
                 </MDBDropdownItem>}
                 {ctx.isLogin() &&
                 <MDBDropdownItem>

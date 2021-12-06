@@ -106,7 +106,7 @@ const SignUp = () => {
         <h1 className='h1' >Créer un compte</h1>
         <form onSubmit={submitHandler}>
           <div className="Input">
-            <label for="name">Nom :</label>
+            <label htmlFor="name">Nom :</label>
             <input
               id="name"
               label="Nom"
@@ -118,7 +118,7 @@ const SignUp = () => {
             />
           </div>
           <div className="Input">
-            <label for="email">Email :</label>
+            <label htmlFor="email">Email :</label>
             <input
               id="email"
               label="Email"
@@ -130,7 +130,7 @@ const SignUp = () => {
             />
           </div>
           <div className="Input">
-            <label for="password">Mot de passe :</label>
+            <label htmlFor="password">Mot de passe :</label>
             <input
               id="password"
               label="Mot de passe"
@@ -142,7 +142,7 @@ const SignUp = () => {
             />
           </div>
           <div className="Input">
-            <label for="password">Confirmation du mot de passe :</label>
+            <label htmlFor="password">Confirmation du mot de passe :</label>
             <input
               id="password"
               label="Mot de passe"

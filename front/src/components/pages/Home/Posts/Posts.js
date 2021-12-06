@@ -41,7 +41,7 @@ const Posts = () => {
     const handlerDeletePostButton = async (id) => {
         try {
             const response = await DELETE( '/api/post/' + id)
-            console.log('Post bien supprimé !' + response);
+            console.log(`Post n°${response.id} bien supprimé !`);
             setPosts(posts.filter( actualPost => actualPost.id !== id ));
         } catch (e) {
             setError(e.response.data.error);
@@ -58,7 +58,7 @@ const Posts = () => {
             
             <ul>
                 {posts.map(post => {
-                    return <Post post={post} onClick={handlerDeletePostButton} />;
+                    return <Post post={post} key={post.id} onClick={handlerDeletePostButton} />;
                 })}
             </ul>
         </div>

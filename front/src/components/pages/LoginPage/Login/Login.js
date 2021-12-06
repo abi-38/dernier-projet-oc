@@ -4,22 +4,21 @@ import { GET, POST } from '../../../../assets/api/confAxios';
 import Button from '../../../UI/button/Button';
 import Card from '../../../UI/card/Card';
 import AuthContext from '../../../../context/Auth-context';
-import '../../../UI/input/Input.scss';
 import '../../../UI/button/Button.scss';
 import '../Sign.scss';
 import inputReducer from '../../../../assets/useReducer/inputReducer';
 import INITIAL_STATE from '../../../../assets/useReducer/INITIAL_STATE';
 
-const Login = () => { 
+const Login = () => {
     // déclarer les hook en 1er
     const ctx = useContext(AuthContext);
     const history = useHistory();
 
-    const [emailState, dispatchEmail] = useReducer (inputReducer, INITIAL_STATE);
-    const [passwordState, dispatchPassword] = useReducer (inputReducer, INITIAL_STATE);
+    const [emailState, dispatchEmail] = useReducer(inputReducer, INITIAL_STATE);
+    const [passwordState, dispatchPassword] = useReducer(inputReducer, INITIAL_STATE);
 
     const [error, setError] = useState(null);
-    const [formIsValid, setFormIsValid] = useState ( false );
+    const [formIsValid, setFormIsValid] = useState(false);
 
     useEffect(() => {
         const identifier = setTimeout(() => {
@@ -37,7 +36,7 @@ const Login = () => {
         }
     }, [emailState.isValid, passwordState.isValid])
 
-    if(ctx.isLogin()) {
+    if (ctx.isLogin()) {
         return <Redirect push to="/home" />
     }
 
@@ -52,34 +51,34 @@ const Login = () => {
 
     const passwordChangeHandler = (event) => {
         dispatchPassword({
-            type: 'USER_INPUT', 
-            val: event.target.value, 
+            type: 'USER_INPUT',
+            val: event.target.value,
             type_input: 'password'
         });
     };
 
     const validateEmailHandler = () => {
-        dispatchEmail({type: 'INPUT_BLUR', type_input: 'email'});
+        dispatchEmail({ type: 'INPUT_BLUR', type_input: 'email' });
     }
 
     const validatePasswordHandler = () => {
-        dispatchPassword({type: 'INPUT_BLUR', type_input: 'password'});
-    }   
+        dispatchPassword({ type: 'INPUT_BLUR', type_input: 'password' });
+    }
 
     const handlerSubmit = async (event) => {
         event.preventDefault();
         setError(null);
 
         try {
-            const response = await POST( '/api/auth/login', {
+            const response = await POST('/api/auth/login', {
                 email: emailState.value,
                 password: passwordState.value
             })
-            const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
+            const { data } = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
             console.log('Utilisateur bien connécté !')
             ctx.onLogin(data);
 
-            const responseUser =  await GET('/api/auth/me'); 
+            const responseUser = await GET('/api/auth/me');
             const dataUser = responseUser.data;
             ctx.saveAdmin(dataUser);
 
@@ -96,11 +95,11 @@ const Login = () => {
                 {error && <div>{error}</div>}
                 <form onSubmit={handlerSubmit} >
                     <div className="Input">
-                        <label for="email">E-mail :</label>
+                        <label htmlFor="email">E-mail :</label>
                         <input
                             id="email"
                             label="Email"
-                            isValid={emailState.isValid}
+                            isvalid={emailState.isValid}
                             type="email"
                             value={emailState.value}
                             onChange={emailChangeHandler}
@@ -108,11 +107,11 @@ const Login = () => {
                         />
                     </div>
                     <div className="Input">
-                        <label for="password">Mot de passe :</label>
+                        <label htmlFor="password">Mot de passe :</label>
                         <input
                             id="password"
                             label="Mot de passe"
-                            isValid={passwordState.isValid}
+                            isvalid={passwordState.isValid}
                             type="password"
                             value={passwordState.value}
                             onChange={passwordChangeHandler}

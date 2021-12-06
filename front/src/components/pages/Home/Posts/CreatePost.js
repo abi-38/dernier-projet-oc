@@ -6,7 +6,7 @@ import '../../../Layout/Header/Header.scss';
 import './PostStyle.scss';
 
 const CreatePost = (props) => {
-    const {onAddPostHandler} = props;
+    const { onAddPostHandler } = props;
 
     const [formIsValid, setFormIsValid] = useState ( false );
 
@@ -81,7 +81,7 @@ const CreatePost = (props) => {
             {error && <div>{error}</div>}
             <form onSubmit={submitHandler} className="Home"> 
                 <div className='Input'>
-                    <label className='h1__h2' for="description">Exprimez-vous</label>
+                    <label className='h1__h2' htmlFor="description">Exprimez-vous</label>
                     <textarea 
                         id="description" 
                         name="description" 
@@ -94,7 +94,7 @@ const CreatePost = (props) => {
                     </textarea>
                 </div>
                 <div className='Input'>
-                    <label className='h1__h2' for="titre">Titre</label>
+                    <label className='h1__h2' htmlFor="titre">Titre</label>
                     <input 
                         id="titre" 
                         name="titre" 
