@@ -40,11 +40,6 @@ export const AuthContextPorvider = (props) => {
     const isLogin = () => {
         return token;
     }
-
-    const isLog = () => {
-        return user;
-    }
-
     const logoutHandler = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -60,7 +55,6 @@ export const AuthContextPorvider = (props) => {
                     saveAdmin: adminHandler,
                     user: user,
                     isLogin: isLogin,
-                    isLog: isLog,
                     onLogout: logoutHandler
                 }}
             >

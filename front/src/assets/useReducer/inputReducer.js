@@ -1,5 +1,5 @@
 const inputReducer = (state, action) => {
-    const nameRegex =  new RegExp(/^[\w]{2,}$/);
+    const nameRegex =  new RegExp(/^[\wé]{2,}$/);
     const passwordRegex = new RegExp(/^[\w]{6,}$/);
     const emailRegex = new RegExp(/^[\w]+(\.[\w]+)*@[\w]+(\.[\w]+)*\.[\w]{2,4}$/);
     switch (action.type) {
@@ -11,9 +11,6 @@ const inputReducer = (state, action) => {
                     return {value: action.val, isValid: emailRegex.test(action.val)};
                 case 'password' :
                     return {value: action.val, isValid: passwordRegex.test(action.val)};
-                case 'passwordConfirmation' :
-                    return {value: action.val, isValid: passwordRegex.test(action.val)};
-                
                 default:
                     console.log("erreur");    
             } break;
@@ -27,9 +24,7 @@ const inputReducer = (state, action) => {
                     return {value: state.value, isValid: emailRegex.test(state.value)};
                 case 'password' :
                     return {value: state.value, isValid: passwordRegex.test(state.value)};
-                case 'passwordConfirmation' :
-                    return {value: state.value, isValid: passwordRegex.test(state.value) }
-                    default:
+                default:
                     console.log("erreur");  
             } break;
     }

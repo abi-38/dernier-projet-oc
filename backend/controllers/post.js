@@ -48,15 +48,22 @@ exports.createPost = async (req, res, next) => {
     });
     return;
   }
+  const postObject = req.file ?
+    {
+      ...req.body, 
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { 
+      ...req.body
+    };
   try {
     const postCreated = await Post.create(
       {
-        ...req.body,
+        postObject, // postObjet n'est pas récupéré
         user: req.user
       },
       {
         include: [{
-          association: Post.User
+          association: Post.User // ceci n'est pas pris en compte
         }]
       });
     const postUpdated = await Post.findByPk(postCreated.id, {
@@ -109,8 +116,6 @@ exports.findOnePost = (req, res, next) => {
   .catch(error => res.status(404).json({ error: "Quelque chose s'est mal passé pendant la récupération du post" })); 
 };
 
-
-// fonctionne mais ne prend pas en compte l'annulation d'une image lors de la modif...
 exports.updatePost = (req, res, next) => {
   const id = req.params.id;
   const postObject = req.file ?
@@ -135,8 +140,11 @@ exports.updatePost = (req, res, next) => {
   });
 };
 
+
+// fonctionne mais ne prend pas en compte l'annulation d'une image lors de la modif...
 exports.deletePost = (req, res, next) => {
   Post.findByPk( req.params.id )
+  // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {
     if(req.file) {
       const filename = post.imageUrl.split('/images/')[1];

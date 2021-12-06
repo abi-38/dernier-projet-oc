@@ -10,7 +10,7 @@ const CreatePost = (props) => {
 
     const [formIsValid, setFormIsValid] = useState ( false );
 
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState("");
 	const [isFilePicked, setIsFilePicked] = useState(false);
     
     const [titleValue, setTitleValue] = useState ( "" );
@@ -67,8 +67,13 @@ const CreatePost = (props) => {
             formData.append('imageUrl', selectedFile);
             formData.append('title', titleValue);
             formData.append('description', descriptionValue);
-    
+            
+            setDescriptionValue("");
+            setTitleValue("");
+            setSelectedFile("");
+            setIsFilePicked(false);
             onAddPostHandler(formData);
+            
         } catch (e) {
             setError(e.response.data.error);
         }
@@ -90,6 +95,7 @@ const CreatePost = (props) => {
                         placeholder="Ajouter du texte..."
                         onChange={descriptionChangeHandler}
                         onBlur={validateDescriptionHandler}
+                        value={descriptionValue}
                     >
                     </textarea>
                 </div>
@@ -100,6 +106,7 @@ const CreatePost = (props) => {
                         name="titre" 
                         onChange={titleChangeHandler}
                         onBlur={validateTitleHandler}
+                        value={titleValue}
                     >
                     </input>
                 </div>
@@ -109,6 +116,7 @@ const CreatePost = (props) => {
                         name="file" 
                         className="Bouton-link__SmallMarge" 
                         onChange={changeHandler}
+                        value={selectedFile}
                     />
                     {isFilePicked ? (
                         <p>L'image est sélectionnée</p>

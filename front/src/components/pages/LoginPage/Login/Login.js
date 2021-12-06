@@ -99,7 +99,6 @@ const Login = () => {
                         <input
                             id="email"
                             label="Email"
-                            isvalid={emailState.isValid}
                             type="email"
                             value={emailState.value}
                             onChange={emailChangeHandler}
@@ -111,7 +110,6 @@ const Login = () => {
                         <input
                             id="password"
                             label="Mot de passe"
-                            isvalid={passwordState.isValid}
                             type="password"
                             value={passwordState.value}
                             onChange={passwordChangeHandler}
