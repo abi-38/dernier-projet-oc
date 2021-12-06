@@ -6,19 +6,21 @@ import '../../../Layout/Header/Header.scss';
 import './PostStyle.scss';
 
 const CreatePost = (props) => {
-    const {onAddPostHandler} = props;
+    const { onAddPostHandler } = props;
+
+    const [formIsValid, setFormIsValid] = useState ( false );
 
     const [selectedFile, setSelectedFile] = useState(null);
-	const [isFilePicked, setIsFilePicked] = useState(false);;
-    const [formIsValid, setFormIsValid] = useState ( false );
+	const [isFilePicked, setIsFilePicked] = useState(false);
+    
     const [titleValue, setTitleValue] = useState ( "" );
     const [titleIsValid, setTitleIsValid] = useState ( null );
     const [descriptionValue, setDescriptionValue] = useState ( "" );
+
     const [descriptionIsValid, setDescriptionValid] = useState ( null )
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setError(false);
         setFormIsValid(null);
 
         const identifier = setTimeout(() => {
@@ -30,8 +32,6 @@ const CreatePost = (props) => {
         return () => {
             console.log('CLEANUP')
             clearTimeout(identifier);
-            setError('Remplissez bien le titre et la drecription.');
-            console.log(error)
         }
     }, [titleIsValid, descriptionIsValid])
 
@@ -62,22 +62,26 @@ const CreatePost = (props) => {
 
 	const submitHandler = async (event) => {
         event.preventDefault();
-        
-		const formData = new FormData();
-		formData.append('imageUrl', selectedFile);
-        formData.append('title', titleValue);
-        formData.append('description', descriptionValue);
-
-        onAddPostHandler(formData);
+        try {
+            const formData = new FormData();
+            formData.append('imageUrl', selectedFile);
+            formData.append('title', titleValue);
+            formData.append('description', descriptionValue);
+    
+            onAddPostHandler(formData);
+        } catch (e) {
+            setError(e.response.data.error);
+        }
 	};
     
     return (
         
         <Card className='Card'>
             <h1 className='h1' >Derniers Post</h1>
-            <form onSubmit={submitHandler} isValid={formIsValid} className="Home"> 
+            {error && <div>{error}</div>}
+            <form onSubmit={submitHandler} className="Home"> 
                 <div className='Input'>
-                    <label className='h1__h2' for="description">Exprimez-vous</label>
+                    <label className='h1__h2' htmlFor="description">Exprimez-vous</label>
                     <textarea 
                         id="description" 
                         name="description" 
@@ -90,7 +94,7 @@ const CreatePost = (props) => {
                     </textarea>
                 </div>
                 <div className='Input'>
-                    <label className='h1__h2' for="titre">Titre</label>
+                    <label className='h1__h2' htmlFor="titre">Titre</label>
                     <input 
                         id="titre" 
                         name="titre" 
@@ -114,7 +118,7 @@ const CreatePost = (props) => {
                     }
                 </div>
                 <div className="publishButton">
-				    <Button type='submit' text="Publier" />
+				    <Button type='submit' text="Publier" disabled={!formIsValid} />
                 </div>
             </form>
             

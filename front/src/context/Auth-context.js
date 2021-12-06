@@ -1,44 +1,67 @@
 import React, {useState, useEffect} from 'react';
 
 const AuthContext = React.createContext({
-    token: null,
-    onLogout: () => {},
     onLogin: (token) => {},
+    token: null,
+    saveAdmin: (user) => {},
+    user: null,
     isLogin: () => {},
+    onLogout: () => {},
 })
 
 export const AuthContextPorvider = (props) => {
     const [token, setToken] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect( () => {
         const storedToken = localStorage.hasOwnProperty('token') ? localStorage.getItem('token') : null;
+        const storedUser = localStorage.hasOwnProperty('user') ? localStorage.getItem('user') : null;
+
         if (storedToken) {
             setToken(storedToken); 
         }
-    }, [])
 
-    const logoutHandler = () => {
-        localStorage.removeItem('token');
-        setToken(null);
-    }
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+
+    }, [])
 
     const loginHandler = (token) => {
         setToken(token.token); 
-        console.log(token);
         localStorage.setItem('token', token.token);
     }
 
+    const adminHandler = (user) => {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+
     const isLogin = () => {
-        return token; 
+        return token;
+    }
+
+    const isLog = () => {
+        return user;
+    }
+
+    const logoutHandler = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setToken(null);
+        setUser(null);
     }
 
     return (
         <AuthContext.Provider
                 value={{
-                    token: token,
-                    onLogout: logoutHandler,
                     onLogin: loginHandler,
-                    isLogin: isLogin
+                    token: token,
+                    saveAdmin: adminHandler,
+                    user: user,
+                    isLogin: isLogin,
+                    isLog: isLog,
+                    onLogout: logoutHandler
                 }}
             >
                 {props.children}

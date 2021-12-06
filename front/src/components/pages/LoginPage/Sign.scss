@@ -6,6 +6,22 @@
     top: 50px;
 }
 
+.Input {
+    margin-bottom: 40px;
+    label {
+      font-size: 1.1rem;
+    }
+    input, textarea {
+      width: 70vw;
+      margin-top: 5px;
+      &:focus {
+        background: $color-focus;
+        border: 3px solid $color-primary;
+        border-radius: 3px;
+        color: $color-primary;
+      }
+    }
+  }
 
 @media (min-width: 760px) {
     .Sinscire {
@@ -14,10 +30,22 @@
         width: 100vw;
         right: -22vw;
     }
+    .Input > input, .Input > textarea {
+        width: 40vw;
+    }
 }
 
 @media (min-width: 1000px) {
     .Sinscire {
         right: -37vw;
     }
+    .Input > input, .Input > textarea {
+        width: 25vw;
+    }
 }
+  
+  @media (min-width: 1600px) {
+    .Input > input, .Input > textarea {
+      width: 14vw;
+    }
+  }

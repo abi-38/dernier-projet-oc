@@ -1,9 +1,10 @@
 const db = require("../models");
 const User = db.user;
 const Post = db.post;
-const Op = db.sequelize.Op; // à quoi ça sert ? est-ce bien utile ?
+const Op = db.sequelize.Op; 
 const fs = require('fs'); // pour les fichiers img
 const userModel = require("../models/user.model");
+
 
 exports.createPost = (req, res, next) => {
   //ici faire les console.log() -> regarder dans le terminal du back
@@ -26,11 +27,8 @@ exports.createPost = (req, res, next) => {
     as: 'user'
     }]
   })
-  //  {include: [{model: User, as: 'user'}]}
   .then((post) => {
-    post.setUser(req.user);     
-    //post.setUser(req.user.dataValues.name); 
-    //post.setUser(req.user.dataValues.imageUrl); 
+    post.setUser(req.user);
     return res.status(201).json(post); 
   })
   .catch((err) => {
@@ -41,6 +39,39 @@ exports.createPost = (req, res, next) => {
   });
 };
 
+/*
+exports.createPost = async (req, res, next) => {
+  //ici faire les console.log() -> regarder dans le terminal du back
+  if(!req.body.title) {
+    res.status(400).json({
+      message: "Le contenu ne peut pas être vide"
+    });
+    return;
+  }
+  try {
+    const postCreated = await Post.create(
+      {
+        ...req.body,
+        user: req.user
+      },
+      {
+        include: [{
+          association: Post.User
+        }]
+      });
+    const postUpdated = await Post.findByPk(postCreated.id, {
+      include: [{
+        model: User,
+        attributes:
+            ['name', 'imageUrl'],
+        as: 'user'
+      }]
+    })
+    return postUpdated
+  } catch (e) {
+    return(res.status(500).json({message: e.message}))
+  }
+};*/
 
 exports.findAllPost = (req, res, next) => {
 
@@ -54,7 +85,6 @@ exports.findAllPost = (req, res, next) => {
          ['updatedAt', 'DESC'] // trie par date de modification des posts
       ]
     })
-    // {include: User}
     .then((posts) => {
       return res.status(200).json(posts);
     })

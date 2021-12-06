@@ -57,6 +57,10 @@ module.exports = (sequelize, Sequelize) => { // 1er instance = objet - 2éme ins
         description: {
             type: Sequelize.STRING,
             allowNull: true
+        },
+        isAdmin: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0
         }
     });
   

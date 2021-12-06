@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import {GET, PUT, DELETE} from '../../../assets/api/confAxios';
+import { PUT, DELETE } from '../../../assets/api/confAxios';
 import { Redirect } from "react-router-dom";
 import Card from "../../UI/card/Card";
 import Button from '../../UI/button/Button';
@@ -15,30 +15,30 @@ const Account = () => {
     const ctx = useContext(AuthContext);
 
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [picture, setPicture] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [description, setDescription] = useState('');
 
     useEffect(() => {
         const loadUser = async () => {
+            setUser(ctx.user);
             
             try { 
-                const response =  await GET('/api/auth/me'); 
-                const data = response.data;
-                setUser(data);
-                setPicture(data.imageUrl);
-                setDescription(data.description);
+                setUser(ctx.user);
+                setPicture(ctx.user.imageUrl);
+                setDescription(ctx.user.description);
+                setName(ctx.user.name)
+                setEmail(ctx.user.email)
                 console.log("Chargement de l'utilisateur réussi !");
                 
             } catch (e) {
-                setError(e.response.data.error); 
+                setError({message : "une erreur est survenue !"}); 
             }
         }
-        setIsLoaded(true)
         loadUser();
-        setIsLoaded(false);
-    }, [])
+    }, [ctx.user])
 
     if(!ctx.isLogin()) {
         return <Redirect push to="/" />
@@ -87,14 +87,14 @@ const Account = () => {
         <div className='PostStyle PostStyle__Account'>
         <Card className='Card Card__Account'>
             {error && <div>{error}</div>}
-            <h1 className='h1'>{user.name}</h1>
+            <h1 className='h1'>{name}</h1>
             <div className='DivProfilAccount'>
                 <img src={picture} className="ImgProfil" alt='photoPost' />                
             </div>
             <PictureButton onChangePictureHandler={handlerChangePicture} />           
             <div className="accountDiv">
                 <h2 className='h1__h2Account'>Email</h2>
-                <p>{user.email}</p>
+                <p>{email}</p>
             </div>
             <div className="accountDiv">
                 <h2 className='h1__h2Account'>Description</h2>
@@ -105,6 +105,7 @@ const Account = () => {
         </Card>
         </div>
     )
+    
 }
 
 export default Account;

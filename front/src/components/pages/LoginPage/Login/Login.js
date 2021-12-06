@@ -1,50 +1,24 @@
-import React, { useContext, useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer, useEffect, useContext } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
-import { POST } from '../../../../assets/api/confAxios';
+import { GET, POST } from '../../../../assets/api/confAxios';
 import Button from '../../../UI/button/Button';
 import Card from '../../../UI/card/Card';
 import AuthContext from '../../../../context/Auth-context';
-import '../../../UI/input/Input.scss';
 import '../../../UI/button/Button.scss';
 import '../Sign.scss';
+import inputReducer from '../../../../assets/useReducer/inputReducer';
+import INITIAL_STATE from '../../../../assets/useReducer/INITIAL_STATE';
 
-const INITIAL_STATE = {
-    value: '',
-    isValid: null,
-    type_input: ''
-};
-
-const inputReducer = (state, action) => {
-    const passwordRegex = /^[\w\-]{6,}$/;
-    const emailRegex = /^[\w\-]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/;
-    switch (action.type) {
-        case 'USER_INPUT':
-            return {
-                value: action.val, 
-                isValid: action.type_input === 'email' ? 
-                    emailRegex.test(action.val) : 
-                    passwordRegex.test(action.val) 
-            };
-        case 'INPUT_BLUR':
-            return {
-                value: state.value, 
-                isValid: action.type_input === 'email' ? 
-                    emailRegex.test(state.value) : 
-                    passwordRegex.test(state.value) 
-            };
-    }
-}
-
-const Login = () => { 
+const Login = () => {
     // déclarer les hook en 1er
     const ctx = useContext(AuthContext);
     const history = useHistory();
 
-    const [emailState, dispatchEmail] = useReducer (inputReducer, INITIAL_STATE);
-    const [passwordState, dispatchPassword] = useReducer (inputReducer, INITIAL_STATE);
+    const [emailState, dispatchEmail] = useReducer(inputReducer, INITIAL_STATE);
+    const [passwordState, dispatchPassword] = useReducer(inputReducer, INITIAL_STATE);
 
     const [error, setError] = useState(null);
-    const [formIsValid, setFormIsValid] = useState ( false );
+    const [formIsValid, setFormIsValid] = useState(false);
 
     useEffect(() => {
         const identifier = setTimeout(() => {
@@ -53,13 +27,16 @@ const Login = () => {
                 emailState.isValid && passwordState.isValid
             )
         }, 500)
+        // j'utilise un timeout pour éviter d'appliquer cette fonction à chaque caractères
+        // n'est pas obligatoire mais permet d'alléger - meilleure performance
         return () => {
+            // bien néttoyer la fonction après le timeOut
             console.log('CLEANUP')
             clearTimeout(identifier);
         }
     }, [emailState.isValid, passwordState.isValid])
 
-    if(ctx.isLogin()) {
+    if (ctx.isLogin()) {
         return <Redirect push to="/home" />
     }
 
@@ -73,29 +50,38 @@ const Login = () => {
     };
 
     const passwordChangeHandler = (event) => {
-        dispatchPassword({type: 'USER_INPUT', val: event.target.value, type_input: 'password'});
+        dispatchPassword({
+            type: 'USER_INPUT',
+            val: event.target.value,
+            type_input: 'password'
+        });
     };
 
     const validateEmailHandler = () => {
-        dispatchEmail({type: 'INPUT_BLUR', type_input: 'email'});
+        dispatchEmail({ type: 'INPUT_BLUR', type_input: 'email' });
     }
 
     const validatePasswordHandler = () => {
-        dispatchPassword({type: 'INPUT_BLUR', type_input: 'password'});
-    }   
+        dispatchPassword({ type: 'INPUT_BLUR', type_input: 'password' });
+    }
 
     const handlerSubmit = async (event) => {
         event.preventDefault();
         setError(null);
 
         try {
-            const response = await POST( '/api/auth/login', {
+            const response = await POST('/api/auth/login', {
                 email: emailState.value,
                 password: passwordState.value
             })
-            const {data} = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
+            const { data } = response; // destructuring - récupérer clé data dans l'objet response -> récup ppté d'un objet
             console.log('Utilisateur bien connécté !')
             ctx.onLogin(data);
+
+            const responseUser = await GET('/api/auth/me');
+            const dataUser = responseUser.data;
+            ctx.saveAdmin(dataUser);
+
             history.push("/home");
         } catch (e) {
             setError(e.response.data.error);
@@ -109,11 +95,11 @@ const Login = () => {
                 {error && <div>{error}</div>}
                 <form onSubmit={handlerSubmit} >
                     <div className="Input">
-                        <label for="email">E-mail :</label>
+                        <label htmlFor="email">E-mail :</label>
                         <input
                             id="email"
                             label="Email"
-                            isValid={emailState.isValid}
+                            isvalid={emailState.isValid}
                             type="email"
                             value={emailState.value}
                             onChange={emailChangeHandler}
@@ -121,11 +107,11 @@ const Login = () => {
                         />
                     </div>
                     <div className="Input">
-                        <label for="password">Mot de passe :</label>
+                        <label htmlFor="password">Mot de passe :</label>
                         <input
                             id="password"
                             label="Mot de passe"
-                            isValid={passwordState.isValid}
+                            isvalid={passwordState.isValid}
                             type="password"
                             value={passwordState.value}
                             onChange={passwordChangeHandler}

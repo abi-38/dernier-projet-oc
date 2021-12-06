@@ -8,7 +8,7 @@ const MenuLogin = [
     {path : '/sinscrire', component: <SignUp/>, exact: true },
     {path : '/', component: <Login/>, exact: true },
     {path : '/home', component: <Home/>, exact: true },
-    {path : '/Account', component: <Account/>, exact: true },
+    {path : '/account', component: <Account/>, exact: true },
     {path : '*', component: <NotFound/> }
 ];
 

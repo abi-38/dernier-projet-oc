@@ -38,7 +38,7 @@ const PictureButton = (props) => {
                 <p>Choisir une image</p>
                 )
             }
-            <Button type='submit' className='Bouton-link__GreyButton' text="Changer la photo" />
+            <Button type='submit' className='Bouton-link__GreyButton' text="Changer la photo" disabled={!isFilePicked} />
         </form>
     )
 }

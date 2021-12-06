@@ -1,15 +1,19 @@
 import Card from "../../../UI/card/Card";
 import DayJS from 'react-dayjs';
 import Button from "../../../UI/button/Button";
+import { useContext } from 'react';
+import AuthContext from '../../../../context/Auth-context';
 
 const Post = (props) => {
     const {post, onClick} = props;
-
+    const ctx = useContext(AuthContext);
+    
+    
     const handleDelete = (id) => {
-        onClick(id);
+        onClick(id);     
     }
 
-    return <li key={post.id} className="Post">
+    return <li className="Post">
         <Card className='Card'>
             <div>
                 {post.userId && post.user.name}
@@ -27,7 +31,7 @@ const Post = (props) => {
                 {post.title} <br/>
                 {post.description}
             </div>
-            <Button text='Supprimer' onClick={() => handleDelete(post.id)} />
+            {ctx.user && ctx.user.isAdmin && <Button text='Supprimer' onClick={() => handleDelete(post.id)} />}
             
         </Card>
     </li>
