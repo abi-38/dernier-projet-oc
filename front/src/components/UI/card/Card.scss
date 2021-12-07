@@ -9,9 +9,10 @@
     align-items: center;
     width: 90vw;
     > form.Home {
-        padding-left: 5vw;
+        padding-left: 9vw;
         > div.publishButton {
             text-align: center;
+            margin-left: -9vw;
         }
     }
     &__Account {
@@ -30,6 +31,9 @@
         width: 55vw;
         > form.Home {
             padding-left: 0vw;
+            > div.publishButton {
+                margin-left: 0vw;
+            }
         }
     }
     .Information {
@@ -51,8 +55,23 @@
 @media (min-width: 1600px) {
     .Card {
         width: 18vw;
+        > form.Home {
+            padding-left: 5vw;
+            > div.publishButton {
+                margin-left: -5vw;
+            }
+        }
     }
     .Information {
         padding-left: 3vw;
+    } 
+}
+
+@media (min-width: 1800px) {
+    .Card > form.Home {
+        padding-left: 3vw;
+        > div.publishButton {
+            margin-left: -3vw;
+        }
     }
 }

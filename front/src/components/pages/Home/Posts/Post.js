@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import AuthContext from '../../../../context/Auth-context';
 
 const Post = (props) => {
-    const {post, onClick} = props;
+    const { post, onClick } = props;
     const ctx = useContext(AuthContext);
     
     
@@ -31,7 +31,7 @@ const Post = (props) => {
                 {post.title} <br/>
                 {post.description}
             </div>
-            {ctx.user && ctx.user.isAdmin && <Button text='Supprimer' onClick={() => handleDelete(post.id)} />}
+            {((ctx.user && ctx.user.isAdmin) || (ctx.user && ctx.user.id === post.userId)) && <Button text='Supprimer' onClick={() => handleDelete(post.id)} />}
             
         </Card>
     </li>

@@ -25,14 +25,12 @@ const Posts = () => {
 
     const handlerCreatePost = async (formData) => {
         try {
-            const response = await POST( '/api/post', formData)
+            await POST( '/api/post', formData)
+            const response = await GET('/api/post');
+            const data = response.data;
+            setPosts(data);
             console.log('Post bien créé !');
-            const {data} = response; 
-            console.log(data);
-            setPosts(previousPosts => [
-                data,
-                ...previousPosts
-             ])
+            
         } catch (e) {
             setError(e.response.data.error);
         }
@@ -40,18 +38,17 @@ const Posts = () => {
 
     const handlerDeletePostButton = async (id) => {
         try {
-            const response = await DELETE( '/api/post/' + id)
-            console.log(`Post n°${response.id} bien supprimé !`);
+            await DELETE( '/api/post/' + id);
             setPosts(posts.filter( actualPost => actualPost.id !== id ));
         } catch (e) {
             setError(e.response.data.error);
-            console.log(error)
         }
     }
 
     return (
         <>
         <div className='PostStyle'>
+            {error && <div>{error}</div>}
             <CreatePost onAddPostHandler={handlerCreatePost}/>
         </div>
         <div className='PostStyle PostStyle__Posts'>

@@ -148,4 +148,19 @@
     .Input > input, .Input > textarea {
       width: 14vw;
     }
+    .PostStyle__Posts li > .Card {
+        .DivPhoto {
+            width: 18vw;
+            img.ImgPost {
+                width: 18vw;
+            }
+        }
+        .DivProfil {
+            width: 11vw;
+            height: 11vw;
+            img.ImgProfil {
+                width: 11vw;
+            }
+        }
+    }
   }

@@ -18,7 +18,6 @@ const SignUp = () => {
   const [nameState, dispatchName] = useReducer(inputReducer, INITIAL_STATE);
   const [emailState, dispatchEmail] = useReducer(inputReducer, INITIAL_STATE);
   const [passwordState, dispatchPassword] = useReducer(inputReducer, INITIAL_STATE);
-  const [passwordConfirmationState, dispatchPasswordConfirmation] = useReducer(inputReducer, INITIAL_STATE);
 
   const [error, setError] = useState(null);
 
@@ -26,14 +25,14 @@ const SignUp = () => {
     const identifier = setTimeout(() => {
         console.warn('validity')
         setFormIsValid(
-            nameState.isValid && emailState.isValid && passwordState.isValid && passwordConfirmationState.value
+            nameState.isValid && emailState.isValid && passwordState.isValid
         )
     }, 500)
     return () => {
         console.log('CLEANUP')
         clearTimeout(identifier);
     }
-  }, [nameState.isValid, emailState.isValid, passwordState.isValid, passwordConfirmationState.isValid, passwordConfirmationState.value])
+  }, [nameState.isValid, emailState.isValid, passwordState.isValid])
 
   if(ctx.isLogin()) {
     return <Redirect push to="/home" />
@@ -61,10 +60,6 @@ const SignUp = () => {
     dispatchPassword({type: 'USER_INPUT', val: event.target.value, type_input: 'password'});
   };
 
-  const passwordConfirmationChangeHandler = (event) => {
-    dispatchPasswordConfirmation({type: 'USER_INPUT', val: event.target.value, type_input: 'passwordConfirmation'});
-  };
-
   const validateNameHandler = () => {
     dispatchName({type: 'INPUT_BLUR', type_input: 'name'});
   };
@@ -77,26 +72,19 @@ const SignUp = () => {
     dispatchPassword({type: 'INPUT_BLUR', type_input: 'password'});
   };
 
-  const validatePasswordConfirmationHandler = () => {
-    dispatchPasswordConfirmation({type: 'INPUT_BLUR', type_input: 'passwordConfirmation'});
-  };
-
   const submitHandler = async (event) => {
     event.preventDefault();
     setError(null);
 
     try {
-      const response = await POST( '/api/auth/signup', {
+      await POST( '/api/auth/signup', {
         name: nameState.value,
         email: emailState.value,
         password: passwordState.value
       })
-      const {data} = response;
-      console.log(`Utilisateur ${data} bien créé !`);
       history.push("/");
     } catch (e) {
       setError(e.response.data.error);
-      console.log(error);
     }
   }
 
@@ -104,13 +92,13 @@ const SignUp = () => {
     <div className="Sinscire">
       <Card>
         <h1 className='h1' >Créer un compte</h1>
+        {error && <div>{error}</div>}
         <form onSubmit={submitHandler}>
           <div className="Input">
             <label htmlFor="name">Nom :</label>
             <input
               id="name"
               label="Nom"
-              isValid={nameState.isValid}
               type="name"
               value={nameState.value}
               onChange={nameChangeHandler}
@@ -122,7 +110,6 @@ const SignUp = () => {
             <input
               id="email"
               label="Email"
-              isValid={emailState.isValid}
               type="email"
               value={emailState.value}
               onChange={emailChangeHandler}
@@ -134,23 +121,10 @@ const SignUp = () => {
             <input
               id="password"
               label="Mot de passe"
-              isValid={passwordState.isValid}
               type="password"
               value={passwordState.value}
               onChange={passwordChangeHandler}
               onBlur={validatePasswordHandler}
-            />
-          </div>
-          <div className="Input">
-            <label htmlFor="password">Confirmation du mot de passe :</label>
-            <input
-              id="password"
-              label="Mot de passe"
-              isValid={passwordConfirmationState.isValid}
-              type="password"
-              value={passwordState.value}
-              onChange={passwordConfirmationChangeHandler}
-              onBlur={validatePasswordConfirmationHandler}
             />
           </div>
           <Button type="submit" disabled={!formIsValid} text='Créer son compte' />

@@ -107,7 +107,7 @@ exports.deleteUser = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN); 
     const userId = decodedToken.data.userId;
     if (req.params.id != userId) {
-        res.status(400).json({
+        res.status(403).json({
             message: "Erreur d'authentification !"
           });
         return;
@@ -182,56 +182,3 @@ exports.updateUser = (req, res, next) => {
       });
     });
 };
-
-/*
-exports.updatePasswordUser = (req, res, next) => {
-    //vérif de l'id de l'utilisateur
-    const token = req.headers.authorization.split(' ')[1]; 
-    const decodedToken = jwt.verify(token, process.env.TOKEN); 
-    const userId = decodedToken.data.userId;
-    
-    const id = req.params.id;
-
-
-    if (id != userId) {
-        res.status(400).json({
-            message: "Erreur d'authentification !"
-          });
-        return;
-    }
-    // vérifier l'ancien mdp avant de le modifier
-    if (req.body.password != User.password) {
-        res.status(400).json({
-            message: "Le mot de passe actuel ne correspond pas !"
-          });
-        return;
-    }
-
-    const mdpReg = new RegExp(/^[\w\-]{6,}$/);
-    const validMdp = mdpReg.test(req.body.password); 
-
-    if(validMdp) {
-        bcrypt.hash(req.body.password, 10)
-        .then(
-            hash => {
-                User.update({password: hash}, {where: { id: id }})
-                .then(num => {
-                    if(num == 1) {
-                      res.status(200).json({ message: "User was updated successfully !" });
-                    } else {
-                      res.status(400).json({
-                        message: `Can't update User with id=${id}. Maybe User wasn't found or req.body is empty`
-                      });
-                    }
-                })
-        })
-        .catch((err) => {
-            res.status(500).json({
-              message: `Error updating User with id=${id}`
-            });
-          });
-
-    } else {
-        return res.status(400).json({ error: 'Email ou mot de passe non valide !' })
-    }
-};*/
