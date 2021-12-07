@@ -32,14 +32,13 @@ const Account = () => {
                 setName(ctx.user.name)
                 setEmail(ctx.user.email)
                 console.log("Chargement de l'utilisateur réussi !");
-                console.log(picture);
                 
             } catch (e) {
                 setError({message : "une erreur est survenue !"}); 
             }
         }
         loadUser();
-    }, [user, picture, name, email, description])
+    }, [ctx.user])
 
     if(!ctx.isLogin()) {
         return <Redirect push to="/" />
@@ -53,6 +52,7 @@ const Account = () => {
             const {data} = response;
             setPicture(data.imageUrl);
         } catch (e) {
+            console.log(e);
             setError(e.response.data.error);
         }
     }
