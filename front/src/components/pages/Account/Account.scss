@@ -21,7 +21,7 @@
       font-size: 1.1rem;
     }
     input, textarea {
-      width: 70vw;
+      width: 80vw;
       margin-top: 5px;
       &:focus {
         background: $color-focus;
@@ -63,7 +63,19 @@
 }
   
   @media (min-width: 1600px) {
+    .DivProfilAccount {
+      overflow: hidden;
+      width: 15vw;
+      height: 15vw;
+      border-radius: 15vw;
+      .ImgProfil {
+          width: 15vw;
+      }
+    }
     .Input > input, .Input > textarea {
       width: 14vw;
+    }
+    .PostStyle__Account div.accountDiv {
+      width: 16vw;
     }
   }

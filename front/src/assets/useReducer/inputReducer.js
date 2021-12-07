@@ -1,7 +1,7 @@
 const inputReducer = (state, action) => {
-    const nameRegex =  new RegExp(/^[\wé]{2,}$/);
-    const passwordRegex = new RegExp(/^[\w]{6,}$/);
-    const emailRegex = new RegExp(/^[\w]+(\.[\w]+)*@[\w]+(\.[\w]+)*\.[\w]{2,4}$/);
+    const nameRegex =  new RegExp(/^[\wéèëäù]{2,}$/);
+    const passwordRegex = new RegExp(/^[\wéèëäù]{6,}$/);
+    const emailRegex = new RegExp(/^[\wéèëäù]+(\.[\wéèëäù]+)*@[\w]+(\.[\w]+)*\.[\w]{2,4}$/);
     switch (action.type) {
         case 'USER_INPUT':
             switch (action.type_input) {

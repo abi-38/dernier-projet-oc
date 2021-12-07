@@ -38,7 +38,7 @@ const Posts = () => {
 
     const handlerDeletePostButton = async (id) => {
         try {
-            const response = await DELETE( '/api/post/' + id)
+            await DELETE( '/api/post/' + id);
             setPosts(posts.filter( actualPost => actualPost.id !== id ));
         } catch (e) {
             setError(e.response.data.error);
@@ -48,6 +48,7 @@ const Posts = () => {
     return (
         <>
         <div className='PostStyle'>
+            {error && <div>{error}</div>}
             <CreatePost onAddPostHandler={handlerCreatePost}/>
         </div>
         <div className='PostStyle PostStyle__Posts'>

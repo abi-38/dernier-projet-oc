@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import AuthContext from '../../../../context/Auth-context';
 
 const Post = (props) => {
-    const {post, onClick} = props;
+    const { post, onClick } = props;
     const ctx = useContext(AuthContext);
     
     

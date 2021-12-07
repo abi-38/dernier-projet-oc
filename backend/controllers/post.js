@@ -21,12 +21,7 @@ exports.createPost = (req, res, next) => {
     } : { 
       ...req.body
     };
-  Post.create(postObject, {include: [{
-    model: User, attributes: 
-        ['name', 'imageUrl'],
-    as: 'user'
-    }]
-  })
+  Post.create(postObject)
   .then((post) => {
     post.setUser(req.user);
     return res.status(201).json(post); 
@@ -38,47 +33,6 @@ exports.createPost = (req, res, next) => {
     });
   });
 };
-
-/*
-exports.createPost = async (req, res, next) => {
-  //ici faire les console.log() -> regarder dans le terminal du back
-  if(!req.body.title) {
-    res.status(400).json({
-      message: "Le contenu ne peut pas être vide"
-    });
-    return;
-  }
-  const postObject = req.file ?
-    {
-      ...req.body, 
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { 
-      ...req.body
-    };
-  try {
-    const postCreated = await Post.create(
-      {
-        postObject, // postObjet n'est pas récupéré
-        user: req.user
-      },
-      {
-        include: [{
-          association: Post.User // ceci n'est pas pris en compte
-        }]
-      });
-    const postUpdated = await Post.findByPk(postCreated.id, {
-      include: [{
-        model: User,
-        attributes:
-            ['name', 'imageUrl'],
-        as: 'user'
-      }]
-    })
-    return postUpdated
-  } catch (e) {
-    return(res.status(500).json({message: e.message}))
-  }
-};*/
 
 exports.findAllPost = (req, res, next) => {
 
@@ -140,13 +94,12 @@ exports.updatePost = (req, res, next) => {
   });
 };
 
-
-// fonctionne mais ne prend pas en compte l'annulation d'une image lors de la modif...
 exports.deletePost = (req, res, next) => {
   Post.findByPk( req.params.id )
   // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {
     if(req.file) {
+      console.warn(post);
       const filename = post.imageUrl.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
         Post.destroy({where: {id: req.params.id} }) 
@@ -183,5 +136,5 @@ exports.deletePost = (req, res, next) => {
       });
     }
   })
-  .catch(error => res.status(500).json({  message: "Le post n'existe pas"  }));
+  .catch(error => res.status(500).json({ message: "Le post n'existe pas" }));
 };

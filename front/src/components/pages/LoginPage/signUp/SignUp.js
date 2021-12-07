@@ -77,17 +77,14 @@ const SignUp = () => {
     setError(null);
 
     try {
-      const response = await POST( '/api/auth/signup', {
+      await POST( '/api/auth/signup', {
         name: nameState.value,
         email: emailState.value,
         password: passwordState.value
       })
-      const {data} = response;
-      console.log(`Utilisateur ${data} bien créé !`);
       history.push("/");
     } catch (e) {
       setError(e.response.data.error);
-      console.log(error);
     }
   }
 
@@ -95,6 +92,7 @@ const SignUp = () => {
     <div className="Sinscire">
       <Card>
         <h1 className='h1' >Créer un compte</h1>
+        {error && <div>{error}</div>}
         <form onSubmit={submitHandler}>
           <div className="Input">
             <label htmlFor="name">Nom :</label>
