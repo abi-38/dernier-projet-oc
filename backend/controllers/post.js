@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 const Post = db.post;
+const Comment = db.comment;
 const Op = db.sequelize.Op; 
 const fs = require('fs'); // pour les fichiers img
 const userModel = require("../models/user.model");
@@ -38,10 +39,15 @@ exports.findAllPost = (req, res, next) => {
 
     Post.findAll({
       include: [{
-      model: User, attributes: // faire une jointure pour récupérer , cf. lien envoyé
+        model: User, attributes: // faire une jointure pour récupérer , cf. lien envoyé
           ['name', 'imageUrl'],
-      as: 'user'
-      }],
+        as: 'user'
+      },
+      {
+        model: Comment, attributes: // faire une jointure pour récupérer , cf. lien envoyé
+          ['title', 'text', "userId", 'id'],
+      as: 'comment'
+    }],
       order: [
          ['updatedAt', 'DESC'] // trie par date de modification des posts
       ]
@@ -67,8 +73,12 @@ exports.findOnePost = (req, res, next) => {
   }
     return res.status(200).json(post); 
   })
-  .catch(error => res.status(404).json({ error: "Quelque chose s'est mal passé pendant la récupération du post" })); 
-};
+  .catch((err) => {
+    return res.status(404).json({
+      message: err.message || "some error occured while looking for the post"
+    });
+  });
+};;
 
 exports.updatePost = (req, res, next) => {
   const id = req.params.id;
@@ -95,6 +105,34 @@ exports.updatePost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
+
+  // rajouter la condition if il a un commentaire ...
+  /*Comment.findAll({
+    where: { postId: req.params.id }
+  })
+  .then((comments) => {
+    comments.destroy() 
+      .then(num => {
+        if(num == 1) {
+          return res.status(200).json({ message: "Comment du post was deleted successfully !" });
+        } else {
+          return res.status(400).json({
+            message: `Can't delete Comment du post with id=${req.params.id}. Maybe Comment du post wasn't found`
+          });
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          message: `Error deleting Comment du post with id=${req.params.id}`
+        });
+      });
+  })
+  .catch((err) => {
+    return res.status(500).json({
+      message: err.message || "some error occured while looking for the comments"
+    });
+  });*/
+
   Post.findByPk( req.params.id )
   // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {

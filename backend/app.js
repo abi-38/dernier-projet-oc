@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const path = require('path');
+const commentRoutes = require('./routes/comment');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
 
@@ -26,6 +27,7 @@ db.sequelize.sync({ alter: process.env.APP_ENV === "dev" }).then(() => {
 app.use(express.json()); //express.json plus de bodyparser
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/post', commentRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 
