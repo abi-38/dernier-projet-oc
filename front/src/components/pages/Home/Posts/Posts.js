@@ -14,7 +14,6 @@ const Posts = () => {
                 const data = response.data;
                 setPosts(data);
                 console.log('Chargement des posts réussis !');
-                
             } catch (e) {
                 setError(e.response.data.error); 
             }
