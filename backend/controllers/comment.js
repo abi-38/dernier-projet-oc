@@ -8,9 +8,9 @@ const userModel = require("../models/user.model");
 const { comment } = require("../models");
 
 exports.createComment = (req, res, next) => {
-  if(!req.body.title) {
+  if(!req.body.text) {
     res.status(400).json({
-      message: "Le nom de commentaire ne peut pas être vide"
+      message: "Le texte ne peut pas être vide"
     });
     return;
   }

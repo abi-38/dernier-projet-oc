@@ -45,7 +45,7 @@ exports.findAllPost = (req, res, next) => {
       },
       {
         model: Comment, attributes: // faire une jointure pour récupérer , cf. lien envoyé
-          ['title', 'text', "userId", 'id'],
+          ['text', "userId", 'id'],
       as: 'comment'
     }],
       order: [
@@ -136,9 +136,15 @@ exports.deletePost = (req, res, next) => {
   Post.findByPk( req.params.id )
   // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {
+    //post.comment.forEach(element => {
+      //element.destroy()
+      //.then(num => {
+      //})
+    //});
     if(req.file) {
       console.warn(post);
       const filename = post.imageUrl.split('/images/')[1];
+      // fs.unlink ne fonctionne pas pour supprimer l'img
       fs.unlink(`images/${filename}`, () => {
         Post.destroy({where: {id: req.params.id} }) 
         .then(num => {
