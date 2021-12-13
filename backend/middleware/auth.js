@@ -15,6 +15,6 @@ module.exports = async (req, res, next) => {
     }
     catch(error) {
         console.log(error)
-        return res.status(401).json({ error: error | 'Utilisateur non authentifié !' })
+        return res.status(401).json({ error: 'Utilisateur non authentifié !' })
     }
 };

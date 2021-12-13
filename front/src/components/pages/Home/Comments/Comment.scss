@@ -1,0 +1,22 @@
+.Comment, .CreateComment {
+    border-top: 1px solid black;
+    padding-top: 7px;
+    text-align: center;
+    .TitreComment {
+        text-align: left;
+        font-size: 24px;
+        padding-left: 0vw;
+    }
+    .FormComment > div {
+        text-align: left !important;
+    }
+    .FormComment > .publishButton {
+        text-align: center !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    .FormComment > div > textarea {
+        width: 15vw;
+    }
+}

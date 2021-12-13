@@ -11,7 +11,6 @@ const Post = (props) => {
     const { post, onClick } = props;
     const ctx = useContext(AuthContext);
     
-    //const [newPosts, setNewPosts] = useState([]);
     const [comments, setComments] = useState([]);
     const [error, setError] = useState(null);
     
@@ -23,7 +22,6 @@ const Post = (props) => {
         const loadComments = async () => {
             try { 
                 const response =  await GET('/api/post/' + post.id + '/comments');
-                console.warn(post.id);
                 const data = response.data;
                 setComments(data);
                 console.log('Chargement des commentaires réussis !');
@@ -35,9 +33,9 @@ const Post = (props) => {
         loadComments();
     }, [])
 
-    const handlerCreateComment = async (value) => {
+    const handlerCreateComment = async (textValue) => {
         try {
-            await POST( '/api/post/' + post.id + '/comments', value)
+            await POST( '/api/post/' + post.id + '/comments', {text: textValue})
             const response =  await GET('/api/post/' + post.id + '/comments');
             const data = response.data;
             setComments(data);
