@@ -104,19 +104,12 @@ exports.updatePost = (req, res, next) => {
   });
 };
 
-exports.deletePost = (req, res, next) => {
-
+exports.deletePost = (req, res, next) => {  
   Post.findByPk( req.params.id )
-  // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {
-    //post.comment.forEach(element => {
-      //element.destroy()
-      //.then(num => {
-      //})
-    //});
-    if(req.file) {
-      console.warn(post);
+    if(post.imageUrl) {
       const filename = post.imageUrl.split('/images/')[1];
+      console.warn(filename);
       fs.unlink(`images/${filename}`, () => {
         Post.destroy({where: {id: req.params.id} }) 
         .then(num => {
