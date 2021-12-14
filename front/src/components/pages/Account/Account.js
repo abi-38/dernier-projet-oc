@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { PUT, DELETE } from '../../../assets/api/confAxios';
+import { GET, PUT, DELETE } from '../../../assets/api/confAxios';
 import { Redirect } from "react-router-dom";
 import Card from "../../UI/card/Card";
 import Button from '../../UI/button/Button';
@@ -23,22 +23,19 @@ const Account = () => {
 
     useEffect(() => {
         const loadUser = async () => {
-            setUser(ctx.user);
-            
-            try { 
-                setUser(ctx.user);
-                setPicture(ctx.user.imageUrl);
-                setDescription(ctx.user.description);
-                setName(ctx.user.name)
-                setEmail(ctx.user.email)
+            const response =  await GET('/api/auth/me'); 
+            const data = response.data;
+            if (response.status === 200) { 
+                setUser(data);
+                setPicture(data.imageUrl);
+                setName(data.name);
+                setEmail(data.email);
+                setDescription(data.description);
                 console.log("Chargement de l'utilisateur réussi !");
-                
-            } catch (e) {
-                setError({message : "une erreur est survenue !"}); 
             }
         }
         loadUser();
-    }, [ctx.user])
+    }, [])
 
     if(!ctx.isLogin()) {
         return <Redirect push to="/" />
