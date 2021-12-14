@@ -12,9 +12,7 @@ module.exports = async (req, res, next) => {
         const user = await User.findByPk(userId)
         req.user = user
         const postuser = await Post.findByPk(req.params.id)
-        console.log(user.isAdmin)
-        console.log(postuser.userId)
-        console.log(user.id)
+        // l'utilisateur est admin ou c'est son post
         if(user.isAdmin || postuser.userId == user.id) {
             next();
         } else {

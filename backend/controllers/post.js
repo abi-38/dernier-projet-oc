@@ -44,7 +44,7 @@ exports.findAllPost = (req, res, next) => {
         as: 'user'
       },
       {
-        model: Comment, attributes: // faire une jointure pour récupérer , cf. lien envoyé
+        model: Comment, attributes:
           ['text', "userId", 'id'],
       as: 'comment'
     }],
@@ -106,33 +106,6 @@ exports.updatePost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
 
-  // rajouter la condition if il a un commentaire ...
-  /*Comment.findAll({
-    where: { postId: req.params.id }
-  })
-  .then((comments) => {
-    comments.destroy() 
-      .then(num => {
-        if(num == 1) {
-          return res.status(200).json({ message: "Comment du post was deleted successfully !" });
-        } else {
-          return res.status(400).json({
-            message: `Can't delete Comment du post with id=${req.params.id}. Maybe Comment du post wasn't found`
-          });
-        }
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          message: `Error deleting Comment du post with id=${req.params.id}`
-        });
-      });
-  })
-  .catch((err) => {
-    return res.status(500).json({
-      message: err.message || "some error occured while looking for the comments"
-    });
-  });*/
-
   Post.findByPk( req.params.id )
   // récup post actuel + récupérer son img puis supprimer l'ensemble
   .then(post => {
@@ -144,7 +117,6 @@ exports.deletePost = (req, res, next) => {
     if(req.file) {
       console.warn(post);
       const filename = post.imageUrl.split('/images/')[1];
-      // fs.unlink ne fonctionne pas pour supprimer l'img
       fs.unlink(`images/${filename}`, () => {
         Post.destroy({where: {id: req.params.id} }) 
         .then(num => {
